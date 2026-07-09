@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clear Vision Headlights — Quarryville, PA</title>
+<meta name="description" content="Local, teen-run headlight restoration in Quarryville, PA. We sand, polish, and seal foggy, yellowed headlights back to clear. DM us for a free quote.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='9' fill='%2310131A'/%3E%3Cpath d='M9 20c0-6 5-10 11-10h6c4 0 5 3 5 6v6c0 6-6 11-13 11-5 0-9-3-9-7z' fill='%237FE0EC'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800;900&family=Work+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#10131a;
+    --ink-2:#171b24;
+    --ink-3:#20252f;
+    --line:#2a3040;
+    --haze:#c98a4a;
+    --haze-soft:#7a5a3c;
+    --clear:#7fe0ec;
+    --clear-bright:#dcfbff;
+    --blue:#5b6ef5;
+    --blue-bright:#7c8bff;
+    --chrome:#eef1f5;
+    --text:#c7cdd6;
+    --text-dim:#838c99;
+    --display:'Big Shoulders Display', sans-serif;
+    --body:'Work Sans', sans-serif;
+    --mono:'IBM Plex Mono', monospace;
+    --maxw:1180px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--ink);
+    color:var(--text);
+    font-family:var(--body);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  img,svg{display:block;max-width:100%;}
+  a{color:inherit;}
+  h1,h2,h3{
+    font-family:var(--display);
+    color:var(--chrome);
+    margin:0;
+    text-transform:uppercase;
+    letter-spacing:.01em;
+    font-weight:800;
+  }
+  p{margin:0;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;}
+  section{padding:min(11vw,120px) 0;}
+
+  ::selection{background:var(--clear);color:var(--ink);}
+
+  :focus-visible{
+    outline:2px solid var(--clear);
+    outline-offset:3px;
+    border-radius:4px;
+  }
+
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:.72rem;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--clear);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:14px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:22px;height:1px;
+    background:var(--clear);
+    opacity:.6;
+  }
+
+  /* ---------- Buttons ---------- */
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    font-family:var(--body);
+    font-weight:600;
+    font-size:.95rem;
+    padding:14px 24px;
+    border-radius:999px;
+    text-decoration:none;
+    border:1px solid transparent;
+    transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
+    cursor:pointer;
+    white-space:nowrap;
+  }
+  .btn:hover{transform:translateY(-2px);}
+  .btn-primary{
+    background:linear-gradient(135deg,var(--blue-bright),var(--blue));
+    color:#fff;
+    box-shadow:0 10px 30px -10px rgba(91,110,245,.6);
+  }
+  .btn-primary:hover{box-shadow:0 14px 34px -8px rgba(91,110,245,.75);}
+  .btn-ghost{
+    background:transparent;
+    border-color:var(--line);
+    color:var(--chrome);
+  }
+  .btn-ghost:hover{border-color:var(--clear);color:var(--clear);}
+  .btn svg{flex:none;}
+
+  /* ---------- Nav ---------- */
+  header{
+    position:sticky;top:0;z-index:40;
+    background:rgba(16,19,26,.78);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  nav.wrap{
+    display:flex;align-items:center;justify-content:space-between;
+    padding-top:16px;padding-bottom:16px;
+  }
+  .brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--chrome);}
+  .brand-mark{color:var(--clear);}
+  .brand-text{display:flex;flex-direction:column;line-height:1.1;}
+  .brand-text b{
+    font-family:var(--display);
+    font-size:1.25rem;
+    letter-spacing:.02em;
+    font-weight:800;
+  }
+  .brand-text span{
+    font-family:var(--mono);
+    font-size:.6rem;
+    letter-spacing:.14em;
+    color:var(--text-dim);
+    text-transform:uppercase;
+  }
+  .nav-cta{font-size:.85rem;padding:11px 20px;}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    padding-top:min(8vw,86px);
+    position:relative;
+    overflow:clip;
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    top:-200px;left:50%;
+    width:900px;height:600px;
+    transform:translateX(-50%);
+    background:radial-gradient(closest-side, rgba(91,110,245,.16), transparent 70%);
+    pointer-events:none;
+  }
+  .hero-grid{
+    position:relative;
+    display:grid;
+    grid-template-columns:1.05fr .95fr;
+    gap:56px;
+    align-items:center;
+  }
+  .hero h1{
+    font-size:clamp(2.6rem,6vw,4.4rem);
+    line-height:.96;
+  }
+  .hero h1 em{
+    font-style:normal;
+    color:var(--clear);
+  }
+  .hero-sub{
+    margin-top:22px;
+    font-size:clamp(1rem,1.6vw,1.15rem);
+    color:var(--text);
+    max-width:46ch;
+  }
+  .hero-actions{
+    margin-top:32px;
+    display:flex;
+    align-items:center;
+    gap:18px;
+    flex-wrap:wrap;
+  }
+  .hero-note{
+    font-family:var(--mono);
+    font-size:.72rem;
+    color:var(--text-dim);
+    letter-spacing:.03em;
+  }
+
+  /* ---------- Lens interactive ---------- */
+  .lens-wrap{position:relative;}
+  .lens-caption{
+    display:flex;justify-content:space-between;
+    font-family:var(--mono);
+    font-size:.68rem;
+    letter-spacing:.12em;
+    color:var(--text-dim);
+    margin-bottom:10px;
+    text-transform:uppercase;
+  }
+  .lens-caption strong{color:var(--clear);font-weight:500;}
+  .lens{
+    position:relative;
+    aspect-ratio:600/340;
+    border-radius:28px;
+    overflow:hidden;
+    clip-path:url(#lensClip);
+    background:var(--ink-2);
+    box-shadow:0 30px 60px -30px rgba(0,0,0,.7), inset 0 0 0 1px rgba(255,255,255,.06);
+  }
+  .lens-layer{position:absolute;inset:0;}
+  .lens-clear{
+    background:
+      radial-gradient(140% 140% at 15% 15%, rgba(255,255,255,.35), transparent 45%),
+      linear-gradient(135deg,var(--clear-bright) 0%, var(--clear) 48%, #235861 100%);
+  }
+  .lens-hazy{
+    background:linear-gradient(135deg,#dba15c 0%, var(--haze) 45%, #5a4029 100%);
+    filter:blur(1.6px) saturate(.9) brightness(.94);
+    clip-path:inset(0 55% 0 0);
+    transition:clip-path .05s linear;
+  }
+  .haze-texture{
+    position:absolute;inset:0;
+    background-image:
+      radial-gradient(circle at 22% 28%, rgba(255,255,255,.12), transparent 42%),
+      radial-gradient(circle at 68% 65%, rgba(0,0,0,.22), transparent 48%),
+      radial-gradient(circle at 40% 80%, rgba(255,255,255,.06), transparent 40%);
+    mix-blend-mode:overlay;
+  }
+  .lens-shine{
+    position:absolute;inset:0;
+    background:linear-gradient(115deg, transparent 40%, rgba(255,255,255,.22) 48%, transparent 56%);
+    mix-blend-mode:screen;
+    pointer-events:none;
+  }
+  .lens-slider{
+    position:absolute;inset:0;
+    width:100%;height:100%;
+    margin:0;
+    opacity:0;
+    cursor:ew-resize;
+    -webkit-appearance:none;appearance:none;
+  }
+  .lens-slider::-webkit-slider-thumb{-webkit-appearance:none;width:1px;height:1px;}
+  .lens-handle{
+    position:absolute;top:0;bottom:0;
+    left:38%;
+    transform:translateX(-50%);
+    display:flex;align-items:center;justify-content:center;
+    pointer-events:none;
+  }
+  .lens-handle::before{
+    content:"";
+    position:absolute;top:0;bottom:0;left:50%;
+    width:2px;
+    background:rgba(255,255,255,.55);
+    transform:translateX(-50%);
+  }
+  .lens-handle-dot{
+    position:relative;
+    width:46px;height:46px;
+    border-radius:50%;
+    background:var(--ink);
+    border:1px solid rgba(255,255,255,.25);
+    display:flex;align-items:center;justify-content:center;
+    color:var(--chrome);
+    box-shadow:0 6px 18px rgba(0,0,0,.5);
+  }
+  .lens-tag{
+    position:absolute;top:14px;
+    font-family:var(--mono);
+    font-size:.62rem;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    padding:5px 10px;
+    border-radius:999px;
+    background:rgba(16,19,26,.55);
+    border:1px solid rgba(255,255,255,.15);
+    color:var(--chrome);
+    pointer-events:none;
+  }
+  .lens-tag.left{left:14px;}
+  .lens-tag.right{right:14px;}
+
+  /* ---------- Trust strip ---------- */
+  .trust{
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+  }
+  .trust-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+  }
+  .trust-item{
+    padding:34px 30px;
+    position:relative;
+  }
+  .trust-item + .trust-item{border-left:1px solid var(--line);}
+  .trust-item b{
+    display:block;
+    font-family:var(--body);
+    font-weight:700;
+    color:var(--chrome);
+    font-size:1.02rem;
+    margin-bottom:6px;
+  }
+  .trust-item span{font-size:.9rem;color:var(--text-dim);}
+
+  /* ---------- Section heads ---------- */
+  .section-head{
+    max-width:640px;
+    margin-bottom:56px;
+  }
+  .section-head h2{font-size:clamp(1.9rem,3.6vw,2.7rem);line-height:1.02;}
+  .section-head p{margin-top:16px;color:var(--text-dim);font-size:1.02rem;}
+
+  /* ---------- Process ---------- */
+  .process-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:2px;
+    background:var(--line);
+    border:1px solid var(--line);
+    border-radius:20px;
+    overflow:hidden;
+  }
+  .step{
+    background:var(--ink-2);
+    padding:38px 30px;
+  }
+  .step-num{
+    font-family:var(--mono);
+    color:var(--text-dim);
+    font-size:.75rem;
+    letter-spacing:.1em;
+  }
+  .step-icon{
+    color:var(--clear);
+    margin:18px 0 20px;
+  }
+  .step h3{
+    font-size:1.3rem;
+    letter-spacing:.02em;
+    margin-bottom:10px;
+  }
+  .step p{color:var(--text-dim);font-size:.94rem;}
+
+  /* ---------- About ---------- */
+  .about{
+    display:grid;
+    grid-template-columns:.85fr 1.15fr;
+    gap:64px;
+    align-items:center;
+  }
+  .about-visual{
+    aspect-ratio:1/1;
+    border-radius:24px;
+    background:
+      radial-gradient(120% 120% at 20% 15%, rgba(127,224,236,.16), transparent 55%),
+      linear-gradient(160deg, var(--ink-2), var(--ink));
+    border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;
+    position:relative;
+    overflow:hidden;
+  }
+  .about-visual svg{width:56%;height:56%;color:var(--clear);opacity:.9;}
+  .about-copy p{color:var(--text);font-size:1.03rem;margin-bottom:18px;max-width:56ch;}
+  .about-copy p:last-child{margin-bottom:0;color:var(--text-dim);font-size:.95rem;}
+
+  /* ---------- Why it matters ---------- */
+  .why-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:24px;
+  }
+  .why-card{
+    padding:32px 28px;
+    background:var(--ink-2);
+    border:1px solid var(--line);
+    border-radius:18px;
+  }
+  .why-card h3{
+    font-family:var(--body);
+    font-weight:700;
+    text-transform:none;
+    font-size:1.08rem;
+    color:var(--chrome);
+    margin-bottom:10px;
+  }
+  .why-card p{color:var(--text-dim);font-size:.92rem;}
+
+  /* ---------- Service area ---------- */
+  .area{
+    display:grid;
+    grid-template-columns:1fr .8fr;
+    gap:56px;
+    align-items:center;
+  }
+  .area-copy p{color:var(--text);font-size:1.03rem;max-width:52ch;margin-bottom:22px;}
+  .area-list{
+    display:flex;flex-wrap:wrap;gap:10px;
+    list-style:none;padding:0;margin:0;
+    font-family:var(--mono);font-size:.78rem;letter-spacing:.03em;
+  }
+  .area-list li{
+    padding:7px 14px;
+    border:1px solid var(--line);
+    border-radius:999px;
+    color:var(--text-dim);
+  }
+  .area-visual{
+    aspect-ratio:1/1;
+    border-radius:50%;
+    border:1px dashed var(--line);
+    display:flex;align-items:center;justify-content:center;
+    position:relative;
+  }
+  .area-visual::before,.area-visual::after{
+    content:"";
+    position:absolute;border:1px dashed var(--line);border-radius:50%;
+  }
+  .area-visual::before{inset:14%;}
+  .area-visual::after{inset:30%;}
+  .area-pin{
+    position:relative;z-index:2;
+    display:flex;flex-direction:column;align-items:center;gap:8px;
+    color:var(--clear);
+    text-align:center;
+  }
+  .area-pin span{
+    font-family:var(--mono);
+    font-size:.66rem;
+    letter-spacing:.1em;
+    color:var(--chrome);
+    text-transform:uppercase;
+  }
+
+  /* ---------- Final CTA ---------- */
+  .final-cta{
+    text-align:center;
+    padding-top:min(9vw,100px);
+    padding-bottom:min(9vw,100px);
+  }
+  .final-cta .eyebrow{justify-content:center;}
+  .final-cta .eyebrow::before{display:none;}
+  .final-cta h2{font-size:clamp(2.2rem,5vw,3.4rem);margin:0 auto;max-width:16ch;}
+  .final-cta p{
+    margin:20px auto 34px;
+    max-width:48ch;
+    color:var(--text-dim);
+    font-size:1.02rem;
+  }
+  .final-cta .btn{padding:17px 30px;font-size:1rem;}
+  .final-follow{
+    margin-top:20px;
+    font-family:var(--mono);
+    font-size:.72rem;
+    color:var(--text-dim);
+    letter-spacing:.04em;
+  }
+
+  /* ---------- Footer ---------- */
+  footer{
+    border-top:1px solid var(--line);
+    padding:34px 0;
+  }
+  footer .wrap{
+    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;
+  }
+  .footer-brand{display:flex;align-items:center;gap:10px;color:var(--text-dim);font-size:.85rem;}
+  .footer-links{
+    display:flex;gap:22px;
+    font-size:.85rem;
+    color:var(--text-dim);
+  }
+  .footer-links a{text-decoration:none;}
+  .footer-links a:hover{color:var(--clear);}
+
+  /* ---------- Reveal animation ---------- */
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease, transform .6s ease;}
+  .reveal.in-view{opacity:1;transform:none;}
+
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
+    .reveal{opacity:1;transform:none;transition:none;}
+    .btn:hover{transform:none;}
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:980px){
+    .hero-grid{grid-template-columns:1fr;}
+    .lens-wrap{order:-1;max-width:520px;margin:0 auto;}
+    .about{grid-template-columns:1fr;}
+    .about-visual{max-width:340px;margin:0 auto;order:-1;}
+    .area{grid-template-columns:1fr;}
+    .area-visual{max-width:320px;margin:0 auto;}
+  }
+  @media (max-width:760px){
+    .trust-grid{grid-template-columns:1fr;}
+    .trust-item + .trust-item{border-left:none;border-top:1px solid var(--line);}
+    .process-grid{grid-template-columns:1fr;}
+    .why-grid{grid-template-columns:1fr;}
+  }
+  @media (max-width:560px){
+    section{padding:64px 0;}
+    .nav-cta span{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <clipPath id="lensClip" clipPathUnits="objectBoundingBox">
+      <path d="M0.03,0.20 C0.03,0.07 0.11,0.03 0.21,0.02 L0.72,0.05 C0.88,0.07 0.98,0.20 0.98,0.40 C0.99,0.58 0.92,0.78 0.78,0.87 L0.20,0.92 C0.09,0.90 0.03,0.82 0.03,0.68 Z"/>
+    </clipPath>
+  </defs>
+</svg>
+
+<header>
+  <nav class="wrap">
+    <a href="#top" class="brand">
+      <svg class="brand-mark" width="30" height="30" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M9 12c0-4 4-7 9-7h6c5 0 9 4 9 8v6c0 6-6 11-13 11-6 0-11-4-11-9V12z"/>
+        <circle cx="17.5" cy="17" r="3.2"/>
+        <path d="M25 9.5l7-3M27 15l7-1.2M25.5 20l6 2.2" stroke-width="1.5"/>
+      </svg>
+      <span class="brand-text">
+        <b>Clear Vision</b>
+        <span>Headlight Restoration</span>
+      </span>
+    </a>
+    <a class="btn btn-primary nav-cta" href="https://www.instagram.com/clear.vision_headlights/" target="_blank" rel="noopener">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.2" cy="6.8" r=".9" fill="currentColor" stroke="none"/></svg>
+      <span>DM for a Quote</span>
+    </a>
+  </nav>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="eyebrow">Quarryville, PA — locally owned, teen-operated</p>
+        <h1>Cloudy headlights,<br><em>made clear</em> again.</h1>
+        <p class="hero-sub">We sand, polish, and seal away years of yellowed, oxidized plastic — bringing your headlights back to a clear, like-new finish. Done locally, right here in Quarryville.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="https://www.instagram.com/clear.vision_headlights/" target="_blank" rel="noopener">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.2" cy="6.8" r=".9" fill="currentColor" stroke="none"/></svg>
+            DM Us for a Free Quote
+          </a>
+          <span class="hero-note">@clear.vision_headlights · we reply fast</span>
+        </div>
+      </div>
+
+      <div class="lens-wrap">
+        <p class="lens-caption"><span>Drag to compare</span><strong>Real restoration</strong></p>
+        <div class="lens">
+          <div class="lens-layer lens-clear"></div>
+          <div class="lens-layer lens-hazy" id="hazyLayer">
+            <div class="haze-texture"></div>
+          </div>
+          <div class="lens-layer lens-shine"></div>
+          <span class="lens-tag left">Foggy</span>
+          <span class="lens-tag right">Restored</span>
+          <div class="lens-handle" id="lensHandle">
+            <div class="lens-handle-dot">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M9 6l-5 6 5 6z"/><path d="M15 6l5 6-5 6z"/></svg>
+            </div>
+          </div>
+          <input type="range" min="0" max="100" value="38" id="lensSlider" class="lens-slider" aria-label="Drag to compare a foggy headlight with a restored one">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="trust">
+    <div class="wrap trust-grid">
+      <div class="trust-item reveal">
+        <b>Locally owned &amp; operated</b>
+        <span>A couple of Quarryville teens, doing the work ourselves.</span>
+      </div>
+      <div class="trust-item reveal">
+        <b>Pricing built around your car</b>
+        <span>Every headlight's different — DM us and we'll quote it.</span>
+      </div>
+      <div class="trust-item reveal">
+        <b>Careful work, every time</b>
+        <span>We treat your car like it's the only one on the schedule.</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="process">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow">How it works</p>
+        <h2>From hazy to clear in three steps</h2>
+        <p>No shortcuts — just the process that actually gets oxidized plastic clear again.</p>
+      </div>
+      <div class="process-grid">
+        <div class="step reveal">
+          <p class="step-num">01</p>
+          <div class="step-icon">
+            <svg width="30" height="30" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="6" y="6" width="28" height="28" rx="3"/><path d="M6 14h28M6 22h28M6 30h28M14 6v28M22 6v28M30 6v28" stroke-width=".9" opacity=".55"/></svg>
+          </div>
+          <h3>Sand</h3>
+          <p>We wet-sand away the oxidized outer layer that's causing the yellow, cloudy look.</p>
+        </div>
+        <div class="step reveal">
+          <p class="step-num">02</p>
+          <div class="step-icon">
+            <svg width="30" height="30" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="20" cy="20" r="14"/><path d="M20 8a12 12 0 0 1 12 12" stroke-linecap="round"/><path d="M20 32a12 12 0 0 1-12-12" stroke-linecap="round"/></svg>
+          </div>
+          <h3>Polish</h3>
+          <p>A multi-stage buff brings the lens back to a smooth, glass-like clarity.</p>
+        </div>
+        <div class="step reveal">
+          <p class="step-num">03</p>
+          <div class="step-icon">
+            <svg width="30" height="30" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M20 5l13 5v9c0 9-6 15-13 16-7-1-13-7-13-16v-9z"/><path d="M14 20l4 4 8-8" stroke-linecap="round"/></svg>
+          </div>
+          <h3>Seal</h3>
+          <p>A UV-resistant coat goes on last, so the clarity actually lasts.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="wrap about">
+      <div class="about-visual reveal">
+        <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 12c0-4 4-7 9-7h6c5 0 9 4 9 8v6c0 6-6 11-13 11-6 0-11-4-11-9V12z"/>
+          <circle cx="17.5" cy="17" r="3.2"/>
+          <path d="M25 9.5l7-3M27 15l7-1.2M25.5 20l6 2.2" stroke-width="1.3"/>
+        </svg>
+      </div>
+      <div class="about-copy reveal">
+        <p class="eyebrow">Who we are</p>
+        <h2 style="font-size:clamp(1.9rem,3.4vw,2.5rem);margin-bottom:20px;">Run by local teens who like doing things right</h2>
+        <p>Clear Vision Headlights started small — a couple of neighbors in Quarryville with some sandpaper, a lot of patience, and headlights that badly needed help. Word got around, and now we restore headlights for folks across the area.</p>
+        <p>We're still local, still small, and we still treat every car that pulls in like it's the only one that matters. No corporate overhead, no upsells — just careful work, done nearby.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="why">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow">Why it matters</p>
+        <h2>It's not just cosmetic</h2>
+      </div>
+      <div class="why-grid">
+        <div class="why-card reveal">
+          <h3>See better at night</h3>
+          <p>Oxidized lenses scatter light instead of aiming it where you need it — cloudy headlights can mean less visibility after dark.</p>
+        </div>
+        <div class="why-card reveal">
+          <h3>Built for PA inspections</h3>
+          <p>Pennsylvania's annual inspection checks that your lights are doing their job. Clear lenses are one less thing to worry about.</p>
+        </div>
+        <div class="why-card reveal">
+          <h3>Looks like a new car</h3>
+          <p>Clear headlights change the whole front end of your car — for a lot less than replacing them.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="area">
+    <div class="wrap area">
+      <div class="area-copy reveal">
+        <p class="eyebrow">Where we work</p>
+        <h2 style="font-size:clamp(1.9rem,3.4vw,2.5rem);margin-bottom:20px;">Based in Quarryville, happy to travel nearby</h2>
+        <p>We're based right in Quarryville and serve the surrounding Lancaster County area. Not sure if you're in range? Send us your location and we'll let you know.</p>
+        <ul class="area-list">
+          <li>Quarryville</li>
+          <li>Lancaster County</li>
+          <li>Nearby towns on request</li>
+        </ul>
+      </div>
+      <div class="area-visual reveal">
+        <div class="area-pin">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 21s7-7.2 7-12a7 7 0 1 0-14 0c0 4.8 7 12 7 12z"/><circle cx="12" cy="9" r="2.4"/></svg>
+          <span>Quarryville, PA</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="final-cta">
+    <div class="wrap">
+      <p class="eyebrow">Get started</p>
+      <h2 class="reveal">Ready for a clearer view?</h2>
+      <p class="reveal">Send us a couple photos of your headlights and we'll get you a price — no pressure, no obligation.</p>
+      <a class="btn btn-primary reveal" href="https://www.instagram.com/clear.vision_headlights/" target="_blank" rel="noopener">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.2" cy="6.8" r=".9" fill="currentColor" stroke="none"/></svg>
+        Message @clear.vision_headlights
+      </a>
+      <p class="final-follow">Follow along on Instagram for before-and-afters as we post them.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-brand">
+      <svg width="18" height="18" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12c0-4 4-7 9-7h6c5 0 9 4 9 8v6c0 6-6 11-13 11-6 0-11-4-11-9V12z"/><circle cx="17.5" cy="17" r="3.2"/></svg>
+      <span>Clear Vision Headlights · Quarryville, PA</span>
+    </div>
+    <div class="footer-links">
+      <a href="https://www.instagram.com/clear.vision_headlights/" target="_blank" rel="noopener">Instagram</a>
+      <span>© 2026</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Lens drag-to-compare
+  (function(){
+    var slider = document.getElementById('lensSlider');
+    var hazy = document.getElementById('hazyLayer');
+    var handle = document.getElementById('lensHandle');
+    function update(v){
+      hazy.style.clipPath = 'inset(0 ' + (100 - v) + '% 0 0)';
+      handle.style.left = v + '%';
+    }
+    if(slider){
+      slider.addEventListener('input', function(e){ update(e.target.value); });
+      update(slider.value);
+    }
+  })();
+
+  // Scroll reveal
+  (function(){
+    var items = document.querySelectorAll('.reveal');
+    if(!('IntersectionObserver' in window) || !items.length){
+      items.forEach(function(el){ el.classList.add('in-view'); });
+      return;
+    }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('in-view');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    items.forEach(function(el){ io.observe(el); });
+  })();
+</script>
+
+</body>
+</html>
