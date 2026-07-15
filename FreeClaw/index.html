@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!-- saved from url=(0027)https://freeclaw.eedeb.dev/ -->
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FreeClaw — An AI Agent That Doesn't Burn Your Money</title>
   <meta name="description" content="FreeClaw is a cost-efficient, tool-using AI agent with a web UI. One-line install on Linux.">
@@ -15,7 +15,7 @@
   <link rel="icon" href="https://freeclaw.eedeb.dev/eagle.png" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com/">
   <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="">
-  <link href="./FreeClaw — An AI Agent That Doesn&#39;t Burn Your Money_files/css2" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
   <noscript><style>.fade-in,.stagger>*{opacity:1!important;transform:none!important;}</style></noscript>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -1483,7 +1483,7 @@
     <p class="hero-sub hero-load">
       An AI agent that <em>doesn't burn your money.</em><br>
       Runs on your machine, remembers what matters.<br>
-      Searches the web, runs bash, talks to your smart home.<br>
+      Searches the web, runs bash, plugs into MCP servers.<br>
       Multi-user. Terminal CLI. Streaming responses.
     </p>
     <div class="hero-actions hero-load">
@@ -1517,7 +1517,7 @@
   <div class="container">
     <div class="section-label fade-in visible">Features</div>
     <h2 class="section-title fade-in visible">Everything you need.<br>Nothing you don't.</h2>
-    <p class="section-desc fade-in visible">FreeClaw classifies your intent locally before touching any API, picks the cheapest model that can handle the job, and only loads the context it actually needs.</p>
+    <p class="section-desc fade-in visible">FreeClaw classifies your intent locally before touching any API, then decides how much history to send, how cold to run, and which tools to offer — per message.</p>
 
     <div class="features-grid stagger visible">
       <div class="feature-card">
@@ -1528,7 +1528,7 @@
       <div class="feature-card">
         <span class="feature-icon">🧠</span>
         <div class="feature-title">Persistent Memory</div>
-        <div class="feature-desc">Saves durable facts about you to <code>context.md</code> with a <code>save_context</code> tool, and recalls them in future sessions — without bloating the active context window every turn.</div>
+        <div class="feature-desc">Durable facts about you live in <code>context.md</code>, read and updated with the same file tools the agent uses for everything else — without that history bloating the active context window every turn.</div>
       </div>
       <div class="feature-card" style="--cx: 29.84375px; --cy: 247.03125px;">
         <span class="feature-icon">🖥️</span>
@@ -1536,19 +1536,19 @@
         <div class="feature-desc">Runs shell commands directly on your machine and returns the output. Full access, no sandboxing.</div>
       </div>
       <div class="feature-card" style="--cx: 118.5px; --cy: 298.265625px;">
-        <span class="feature-icon">🏠</span>
-        <div class="feature-title">Smart Home Control</div>
-        <div class="feature-desc">Lists and controls any <code>light</code>, <code>switch</code>, <code>fan</code>, <code>lock</code>, or <code>media_player</code> entity via <a href="https://www.home-assistant.io/" target="_blank" rel="noopener" class="inline-link">Home Assistant</a> — including Alexa announcements or TV control, if those devices are exposed there.</div>
+        <span class="feature-icon">🧩</span>
+        <div class="feature-title">MCP Servers</div>
+        <div class="feature-desc">Connect external <a href="https://modelcontextprotocol.io" target="_blank" rel="noopener" class="inline-link">Model Context Protocol</a> servers from <strong>Settings → MCP Servers</strong>. Their tools are fetched over Streamable HTTP and merged into the agent's toolset automatically — no restart required.</div>
       </div>
       <div class="feature-card" style="--cx: 19.171875px; --cy: 259.265625px;">
         <span class="feature-icon">📄</span>
         <div class="feature-title">Files, Pages &amp; Vision</div>
-        <div class="feature-desc">Reads, writes, edits, and deletes files; publishes live HTML pages at a public URL; and describes uploaded images in detail using a vision model.</div>
+        <div class="feature-desc">Creates, reads, edits, deletes, and lists files in its sandboxed static folder; publishes live HTML pages at a public URL; and describes uploaded images in detail using a vision model.</div>
       </div>
       <div class="feature-card">
         <span class="feature-icon">⚡</span>
-        <div class="feature-title">Adaptive Model Routing</div>
-        <div class="feature-desc"><a href="https://github.com/eedeb/classy" target="_blank" rel="noopener" class="inline-link">Classy-AI</a> classifies your message locally before any API call. Small talk uses gpt-oss-20b on <a href="https://groq.com/" target="_blank" rel="noopener" class="inline-link">Groq</a>; complex tasks escalate to gpt-oss-120b, with automatic fallback to NVIDIA NIM or OpenRouter if Groq fails.</div>
+        <div class="feature-title">Adaptive Turns</div>
+        <div class="feature-desc"><a href="https://github.com/eedeb/classy" target="_blank" rel="noopener" class="inline-link">Classy-AI</a> tags your message locally before any API call, and the tag sets the turn: how much history goes out, the sampling temperature, and which tools are offered. Small talk gets a tiny window and no tools; precision work runs colder with everything.</div>
       </div>
       <div class="feature-card" style="--cx: 77.5px; --cy: 225.703125px;">
         <span class="feature-icon">💬</span>
@@ -1559,6 +1559,11 @@
         <span class="feature-icon">🔒</span>
         <div class="feature-title">Password-Protected UI</div>
         <div class="feature-desc">The web chat sits behind a login screen, so it's safe to leave running and reachable on your local network.</div>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🔀</span>
+        <div class="feature-title">Multi-Provider Fallback</div>
+        <div class="feature-desc">Add any OpenAI-compatible endpoint from <strong>Settings → Providers</strong> — URL, key, model. The agent tries them in the order you list them and falls through to the next if one errors out or rate-limits you. No keys are collected at install.</div>
       </div>
       <div class="feature-card">
         <span class="feature-icon">👥</span>
@@ -1586,7 +1591,7 @@
   <div class="container">
     <div class="section-label fade-in visible">How It Works</div>
     <h2 class="section-title fade-in visible">From your browser<br>to the model.</h2>
-    <p class="section-desc fade-in visible">Every message passes through a cost-optimization layer before a single token hits the <a href="https://groq.com/" target="_blank" rel="noopener" class="inline-link">Groq</a> API.</p>
+    <p class="section-desc fade-in visible">Every message passes through a cost-optimization layer before a single token reaches your provider.</p>
 
     <div class="flow stagger visible">
       <div class="flow-step">
@@ -1600,28 +1605,28 @@
         <div class="flow-num">02</div>
         <div class="flow-content">
           <div class="flow-title">Local intent classification</div>
-          <div class="flow-desc">Before any API call, <a href="https://github.com/eedeb/classy" target="_blank" rel="noopener" class="hl-link">Classy-AI</a> reads your message locally and decides the intent — greeting, search, coding, bash, smart home — and picks the model size and context window accordingly. Zero tokens spent.</div>
+          <div class="flow-desc">Before any API call, <a href="https://github.com/eedeb/classy" target="_blank" rel="noopener" class="hl-link">Classy-AI</a> reads your message locally and tags the intent — greeting, banter, search, logic, math, coding, editing — then picks the context window, temperature, and toolset for that turn. Zero tokens spent.</div>
         </div>
       </div>
       <div class="flow-step">
         <div class="flow-num">03</div>
         <div class="flow-content">
-          <div class="flow-title">Groq API call with trimmed context</div>
-          <div class="flow-desc">Only the relevant recent messages are sent to <a href="https://groq.com/" target="_blank" rel="noopener" class="hl-link">Groq's fast inference API</a>. Simple requests use <span class="hl">gpt-oss-20b</span>; complex ones escalate to <span class="hl">gpt-oss-120b</span>. If Groq fails, it falls back automatically to NVIDIA NIM or OpenRouter.</div>
+          <div class="flow-title">Provider call with trimmed context</div>
+          <div class="flow-desc">Only the relevant recent messages — <span class="hl">3 to 9</span> of them — go out to the first enabled provider in <span class="hl">Settings → Providers</span>. If it errors out or rate-limits, FreeClaw falls through to the next provider in your list automatically.</div>
         </div>
       </div>
       <div class="flow-step">
         <div class="flow-num">04</div>
         <div class="flow-content">
           <div class="flow-title">Tool execution (if needed)</div>
-          <div class="flow-desc">If the model calls a tool — web search (capped at 2 calls per task), bash, Home Assistant control, file/page management, image description, or saving long-term memory — FreeClaw executes it locally and feeds the result back in a recursive call.</div>
+          <div class="flow-desc">If the model calls a tool — web search (capped at 2 calls per task), bash, file and page management, image description, opening a URL, or anything exposed by a connected MCP server — FreeClaw executes it locally and feeds the result back in a recursive call.</div>
         </div>
       </div>
       <div class="flow-step">
         <div class="flow-num">05</div>
         <div class="flow-content">
           <div class="flow-title">Response rendered in the UI</div>
-          <div class="flow-desc">The reply comes back to your browser and is rendered with <span class="hl">full markdown</span> — code blocks, lists, headers, links. A live token counter tracks usage.</div>
+          <div class="flow-desc">The reply is streamed back to your browser as <span class="hl">server-sent events</span> and rendered with full markdown — code blocks, lists, headers, links. A live token counter tracks usage.</div>
         </div>
       </div>
     </div>
@@ -1635,7 +1640,7 @@
   <div class="container">
     <div class="section-label fade-in visible">Powered by Classy-AI</div>
     <h2 class="section-title fade-in visible">Intent-first.<br>Before a single token.</h2>
-    <p class="section-desc fade-in visible">Every message is classified locally by <a href="https://github.com/eedeb/classy" target="_blank" rel="noopener" class="inline-link">Classy-AI</a> before touching the Groq API. This is the core of how FreeClaw stays cheap — it never sends more context or uses a bigger model than the request actually needs.</p>
+    <p class="section-desc fade-in visible">Every message is classified locally by <a href="https://github.com/eedeb/classy" target="_blank" rel="noopener" class="inline-link">Classy-AI</a> before touching any provider API. This is the core of how FreeClaw stays cheap — it never sends more context, or offers more tools, than the request actually needs.</p>
 
     <div class="classy-box fade-in visible">
       <div class="classy-header">
@@ -1663,9 +1668,9 @@
     <div class="savings-grid stagger visible">
       <div class="savings-card bar-fill">
         <div class="label">Strategy 01</div>
-        <div class="intent">Small model for small talk</div>
-        <span class="model-tag">gpt-oss-20b</span>
-        <p style="font-family:var(--mono);font-size:12px;color:var(--muted2);line-height:1.65;">Greetings, banter, and personal small talk route to the 20b model. The larger 120b model is only used when the task actually calls for it.</p>
+        <div class="intent">No tools for small talk</div>
+        <span class="model-tag">greeting · banter · about-user</span>
+        <p style="font-family:var(--mono);font-size:12px;color:var(--muted2);line-height:1.65;">Conversational intents are sent with no tool definitions at all and a 3–5 message window. Tool schemas are only paid for when the task actually calls for them.</p>
       </div>
       <div class="savings-card bar-fill" style="--bar:30%">
         <div class="label">Strategy 02</div>
@@ -1689,8 +1694,8 @@
       <div class="savings-card bar-fill">
         <div class="label">Strategy 05</div>
         <div class="intent">Memory, not replay</div>
-        <span class="model-tag">save once · context.md</span>
-        <p style="font-family:var(--mono);font-size:12px;color:var(--muted2);line-height:1.65;">Durable facts about you are saved once with <code>save_context</code> instead of being re-sent in every conversation's context window.</p>
+        <span class="model-tag">write once · context.md</span>
+        <p style="font-family:var(--mono);font-size:12px;color:var(--muted2);line-height:1.65;">Durable facts about you are written once to <code>context.md</code> instead of being re-sent in every conversation's context window.</p>
       </div>
       <div class="savings-card bar-fill">
         <div class="label">Strategy 06</div>
@@ -1734,15 +1739,15 @@
         </div>
         <div class="mock-msg user">
           <div class="mock-label">you</div>
-          <div class="mock-bubble">turn off the living room tv</div>
+          <div class="mock-bubble">save that to a file I can open</div>
         </div>
         <div class="mock-msg agent">
           <div class="mock-label">agent</div>
-          <div class="mock-bubble">Done — TV is off. ✓</div>
+          <div class="mock-bubble">Done — austin-weather.md is up at /static/. ✓</div>
         </div>
       </div>
       <div class="mockup-input-row">
-        <div class="mockup-input">Ask anything — search, code, bash, smart home…</div>
+        <div class="mockup-input">Ask anything — search, code, bash, files…</div>
         <div class="mockup-send">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0d0d0f" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline>
@@ -1840,31 +1845,17 @@
           <td>Creates a new FreeClaw user with their own folder, conversation history, and long-term memory</td>
         </tr>
         <tr>
-          <td>save_context</td>
-          <td>Stores long-term user info to context.md for future sessions</td>
-        </tr>
-        <tr>
-          <td>read_context</td>
-          <td>Shows the current contents of context.md</td>
-        </tr>
-        <tr>
-          <td>get_date</td>
-          <td>Returns today's date</td>
+          <td>open_url</td>
+          <td>Opens a URL or custom URI on your device — a webpage, or an app like your texting or phone client</td>
         </tr>
         <tr>
           <td>run_bash_command</td>
           <td>Executes a bash command on your machine and returns the output</td>
         </tr>
-        <tr>
-          <td>List_Home_Assistant_Devices</td>
-          <td>Lists available switch, light, fan, lock, and media_player entities</td>
-        </tr>
-        <tr>
-          <td>Home_Assistant</td>
-          <td>Calls a Home Assistant service on an entity — e.g. turn on a light, announce on Alexa, control a TV</td>
-        </tr>
       </tbody>
     </table>
+
+    <p class="section-desc fade-in visible" style="margin-top:24px;">Long-term memory isn't a separate tool — <code>context.md</code> is just a file in the agent's static folder, read and edited with <code>read_file</code> and <code>edit_file</code> like anything else. Any tool exposed by a connected <a href="https://modelcontextprotocol.io" target="_blank" rel="noopener" class="inline-link">MCP server</a> is merged into this list automatically.</p>
   </div>
 </section>
 
@@ -1898,35 +1889,35 @@
         <div class="step-num">1</div>
         <div class="step-body">
           <div class="step-title">Clone &amp; set up environment</div>
-          <div class="step-desc">The script clones the repo, creates a Python virtual environment, and installs all dependencies including PyTorch, Flask, Groq, and the Classy classifier.</div>
+          <div class="step-desc">The script clones the repo, creates a Python virtual environment, and installs all dependencies including PyTorch (CPU), Flask, the OpenAI SDK, and the Classy classifier.</div>
         </div>
       </div>
       <div class="step">
         <div class="step-num">2</div>
         <div class="step-body">
-          <div class="step-title">Enter your Groq API key</div>
-          <div class="step-desc">You'll be prompted for your <a href="https://groq.com/" target="_blank" rel="noopener" class="inline-link">Groq</a> API key, saved securely to a local .env file — never committed to the repo. You can also add an optional NVIDIA NIM key as an automatic fallback if Groq ever fails.</div>
+          <div class="step-title">Set a password for the web UI</div>
+          <div class="step-desc">FreeClaw's chat UI sits behind a login screen. You'll set a password during install so it's safe to leave running on your network. That's the only thing collected here — <span style="color:var(--accent)">no API keys</span>. It's written to a local .env file, never committed to the repo.</div>
         </div>
       </div>
       <div class="step">
         <div class="step-num">3</div>
         <div class="step-body">
-          <div class="step-title">Set a password for the web UI</div>
-          <div class="step-desc">FreeClaw's chat UI sits behind a login screen. You'll set a password during install so it's safe to leave running on your network.</div>
+          <div class="step-title">FreeClaw starts automatically</div>
+          <div class="step-desc">The installer registers FreeClaw as a systemd service so it starts on boot, installs the <code>freeclaw</code> terminal client, and prints the local URL — something like <code>http://192.168.x.x:6767</code>.</div>
         </div>
       </div>
       <div class="step">
         <div class="step-num">4</div>
         <div class="step-body">
-          <div class="step-title">Optional: Home Assistant setup</div>
-          <div class="step-desc">Want FreeClaw to control your smart home — including speaking through an <strong>Amazon Alexa</strong> or controlling a TV? Say yes when prompted. You'll enter your <a href="https://www.home-assistant.io/" target="_blank" rel="noopener" class="inline-link">Home Assistant</a> IP address and a long-lived API token, and the agent can then list and control any exposed light, switch, fan, lock, or media player entity.</div>
+          <div class="step-title">Add a provider in the web UI</div>
+          <div class="step-desc">Open the URL, sign in, and head to <strong>Settings → Providers</strong>. Add any OpenAI-compatible endpoint — URL, API key, model name — and stack as many as you like for fallback. FreeClaw can't answer until at least one is configured. Optionally add MCP servers under <strong>Settings → MCP Servers</strong> while you're there.</div>
         </div>
       </div>
       <div class="step">
         <div class="step-num">5</div>
         <div class="step-body">
-          <div class="step-title">FreeClaw starts automatically</div>
-          <div class="step-desc">The installer registers FreeClaw as a systemd service so it starts on boot. At the end it prints the local URL — open it in your browser, sign in, and start chatting.</div>
+          <div class="step-title">Start chatting</div>
+          <div class="step-desc">Chat from any browser on your network, or run <code>freeclaw</code> for the same agent in your terminal. Later on, <code>./update.sh</code> from the install directory pulls the latest changes and restarts the service, leaving your data alone.</div>
         </div>
       </div>
     </div>
@@ -2057,4 +2048,5 @@
 
 <script defer="" src="./FreeClaw — An AI Agent That Doesn&#39;t Burn Your Money_files/v4513226cdae34746b4dedf0b4dfa099e1781791509496" integrity="sha512-ZE9pZaUXND66v380QUtch/5sE9tPFh2zg45pR2PB0CVkCtOREv2AJKkSidISWkysEuQ0EH8faUU5du78bx87UQ==" data-cf-beacon="{&quot;version&quot;:&quot;2024.11.0&quot;,&quot;token&quot;:&quot;5a48b5221257495bab2f3de908cabed2&quot;,&quot;r&quot;:1,&quot;server_timing&quot;:{&quot;name&quot;:{&quot;cfCacheStatus&quot;:true,&quot;cfEdge&quot;:true,&quot;cfExtPri&quot;:true,&quot;cfL4&quot;:true,&quot;cfOrigin&quot;:true,&quot;cfSpeedBrain&quot;:true},&quot;location_startswith&quot;:null}}" crossorigin="anonymous"></script>
 
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496" integrity="sha512-ZE9pZaUXND66v380QUtch/5sE9tPFh2zg45pR2PB0CVkCtOREv2AJKkSidISWkysEuQ0EH8faUU5du78bx87UQ==" data-cf-beacon='{"version":"2024.11.0","token":"5a48b5221257495bab2f3de908cabed2","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
 </body></html>
