@@ -25,6 +25,14 @@
       --fc-amber: #f5a623;
       --fc-amber-dim: rgba(245, 166, 35, 0.12);
       --fc-amber-glow: rgba(245, 166, 35, 0.3);
+      /* Minecraft accent */
+      --mc-green: #5cb52e;
+      --mc-green-dim: rgba(92, 181, 46, 0.12);
+      --mc-green-glow: rgba(92, 181, 46, 0.3);
+      /* Clash Royale accent */
+      --cr-red: #e0303d;
+      --cr-red-dim: rgba(224, 48, 61, 0.12);
+      --cr-red-glow: rgba(224, 48, 61, 0.3);
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -124,6 +132,16 @@
       background: var(--fc-amber-dim);
     }
     .nav-project-btn.fc:hover { border-color: var(--fc-amber); }
+    .nav-project-btn.mc {
+      border-color: rgba(92,181,46,0.3);
+      background: var(--mc-green-dim);
+    }
+    .nav-project-btn.mc:hover { border-color: var(--mc-green); }
+    .nav-project-btn.cr {
+      border-color: rgba(224,48,61,0.3);
+      background: var(--cr-red-dim);
+    }
+    .nav-project-btn.cr:hover { border-color: var(--cr-red); }
     @media (max-width: 900px) {
       .nav-projects { display: none; }
     }
@@ -497,8 +515,8 @@
     </ul>
     <div class="nav-projects">
       <a href="https://freeclaw.eedeb.dev/" target="_blank" class="nav-project-btn fc">🦅 FreeClaw</a>
-      <a href="https://minecraft.eedeb.dev/" target="_blank" class="nav-project-btn">⛏️ Minecraft</a>
-      <a href="https://clashroyale.eedeb.dev/" target="_blank" class="nav-project-btn">👑 Clash Royale</a>
+      <a href="https://minecraft.eedeb.dev/" target="_blank" class="nav-project-btn mc">⛏️ Minecraft</a>
+      <a href="https://clashroyale.eedeb.dev/" target="_blank" class="nav-project-btn cr">👑 Clash Royale</a>
       <a href="https://eedeb.dev/#contact" class="btn btn-primary" style="padding:0.6rem 1.2rem;font-size:0.82rem;">Hire Me</a>
     </div>
   </nav>
