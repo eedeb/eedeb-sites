@@ -143,7 +143,18 @@
     }
     .nav-project-btn.cr:hover { border-color: var(--cr-red); }
     @media (max-width: 900px) {
-      .nav-projects { display: none; }
+      .nav-links { display: none; }
+    }
+    @media (max-width: 600px) {
+      nav { padding: 1rem 4vw; }
+      .nav-logo { font-size: 1rem; }
+      .nav-projects { gap: 0.4rem; }
+      .nav-project-btn { padding: 0.4rem 0.7rem; font-size: 0.72rem; gap: 0.25rem; }
+      .nav-projects .btn-primary { padding: 0.5rem 0.85rem; font-size: 0.75rem; }
+    }
+    @media (max-width: 430px) {
+      .nav-project-btn .label { display: none; }
+      .nav-project-btn { padding: 0.4rem 0.55rem; }
     }
 
 
@@ -497,7 +508,6 @@
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
       #about { grid-template-columns: 1fr; }
-      .nav-links { display: none; }
       footer { flex-direction: column; gap: 0.5rem; text-align: center; }
     }
   </style>
@@ -514,9 +524,9 @@
       <li><a href="https://eedeb.dev/#contact">Contact</a></li>
     </ul>
     <div class="nav-projects">
-      <a href="https://freeclaw.eedeb.dev/" target="_blank" class="nav-project-btn fc">🦅 FreeClaw</a>
-      <a href="https://minecraft.eedeb.dev/" target="_blank" class="nav-project-btn mc">⛏️ Minecraft</a>
-      <a href="https://clashroyale.eedeb.dev/" target="_blank" class="nav-project-btn cr">👑 Clash Royale</a>
+      <a href="https://freeclaw.eedeb.dev/" target="_blank" class="nav-project-btn fc">🦅<span class="label"> FreeClaw</span></a>
+      <a href="https://minecraft.eedeb.dev/" target="_blank" class="nav-project-btn mc">⛏️<span class="label"> Minecraft</span></a>
+      <a href="https://clashroyale.eedeb.dev/" target="_blank" class="nav-project-btn cr">👑<span class="label"> Clash Royale</span></a>
       <a href="https://eedeb.dev/#contact" class="btn btn-primary" style="padding:0.6rem 1.2rem;font-size:0.82rem;">Hire Me</a>
     </div>
   </nav>
@@ -760,5 +770,7 @@
   </script>
 <script defer="" src="./eedeb — Developer &amp; AI Engineer_files/v4513226cdae34746b4dedf0b4dfa099e1781791509496" integrity="sha512-ZE9pZaUXND66v380QUtch/5sE9tPFh2zg45pR2PB0CVkCtOREv2AJKkSidISWkysEuQ0EH8faUU5du78bx87UQ==" data-cf-beacon="{&quot;version&quot;:&quot;2024.11.0&quot;,&quot;token&quot;:&quot;5a48b5221257495bab2f3de908cabed2&quot;,&quot;r&quot;:1,&quot;server_timing&quot;:{&quot;name&quot;:{&quot;cfCacheStatus&quot;:true,&quot;cfEdge&quot;:true,&quot;cfExtPri&quot;:true,&quot;cfL4&quot;:true,&quot;cfOrigin&quot;:true,&quot;cfSpeedBrain&quot;:true},&quot;location_startswith&quot;:null}}" crossorigin="anonymous"></script>
 
+
+<script defer="" src="./eedeb — Developer &amp; AI Engineer_files/v4513226cdae34746b4dedf0b4dfa099e1781791509496(1)" integrity="sha512-ZE9pZaUXND66v380QUtch/5sE9tPFh2zg45pR2PB0CVkCtOREv2AJKkSidISWkysEuQ0EH8faUU5du78bx87UQ==" data-cf-beacon="{&quot;version&quot;:&quot;2024.11.0&quot;,&quot;token&quot;:&quot;5a48b5221257495bab2f3de908cabed2&quot;,&quot;r&quot;:1,&quot;server_timing&quot;:{&quot;name&quot;:{&quot;cfCacheStatus&quot;:true,&quot;cfEdge&quot;:true,&quot;cfExtPri&quot;:true,&quot;cfL4&quot;:true,&quot;cfOrigin&quot;:true,&quot;cfSpeedBrain&quot;:true},&quot;location_startswith&quot;:null}}" crossorigin="anonymous"></script>
 
 </body></html>
