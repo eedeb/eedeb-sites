@@ -360,6 +360,33 @@
       gap: 8px;
     }
 
+    /* ── Demo recording: reuses the install block's window chrome ── */
+    .demo-block {
+      /* Capped at the recording's native 720px so it never upscales soft.
+         Left-aligned rather than centred so its edge lines up with the
+         section heading above it, the same way the install block does. */
+      max-width: 722px;
+      margin: 40px 0 0;
+      background: var(--surface);
+      border: 1px solid var(--border-bright);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .demo-block img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .demo-note {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      padding: 12px 20px 14px;
+      border-top: 1px solid var(--border);
+    }
+
     .linux-badge, .os-badge {
       display: inline-flex;
       align-items: center;
@@ -1498,6 +1525,7 @@
       <span></span><span></span><span></span>
     </button>
     <ul class="nav-links" id="navLinks">
+      <li><a href="https://freeclaw.eedeb.dev/#demo" class="">Demo</a></li>
       <li><a href="https://freeclaw.eedeb.dev/#features" class="active">Features</a></li>
       <li><a href="https://freeclaw.eedeb.dev/#how" class="">How It Works</a></li>
       <li><a href="https://freeclaw.eedeb.dev/#classy" class="">Classy-AI</a></li>
@@ -1559,6 +1587,32 @@
           <span class="os-badge">🍎 macOS</span>
           &nbsp;runs in Docker · requires git, Docker Desktop
         </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- DEMO -->
+<section id="demo">
+  <div class="container">
+    <div class="section-label fade-in visible">Demo</div>
+    <h2 class="section-title fade-in visible">Ask it something.<br>Watch it work.</h2>
+    <p class="section-desc fade-in visible">One message, start to finish: FreeClaw classifies the intent locally, decides the question needs the web, scrapes the results itself, and answers — running on a laptop, against whichever provider you pointed it at.</p>
+
+    <div class="demo-block fade-in visible">
+      <div class="install-bar">
+        <div class="dot r"></div>
+        <div class="dot y"></div>
+        <div class="dot g"></div>
+        <span class="label">localhost:6767</span>
+      </div>
+      <img src="https://freeclaw.eedeb.dev/demo.gif"
+           alt="The FreeClaw chat UI: a question about the weather is typed, sent, and answered with live scraped data"
+           width="720" height="572">
+      <div class="demo-note">
+        real session · idle pauses trimmed
       </div>
     </div>
   </div>
