@@ -4,10 +4,10 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FreeClaw — An AI Agent That Doesn't Burn Your Money</title>
-  <meta name="description" content="FreeClaw is a cost-efficient, tool-using AI agent with a web UI. One-line install on Linux.">
+  <meta name="description" content="FreeClaw is a cost-efficient, tool-using AI agent with a web UI. One-line install on Linux and macOS.">
   <meta name="theme-color" content="#0a0a0c">
   <meta property="og:title" content="FreeClaw — An AI Agent That Doesn&#39;t Burn Your Money">
-  <meta property="og:description" content="A cost-efficient, tool-using AI agent with a web UI. One-line install on Linux.">
+  <meta property="og:description" content="A cost-efficient, tool-using AI agent with a web UI. One-line install on Linux and macOS.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://freeclaw.eedeb.dev/">
   <meta property="og:image" content="https://freeclaw.eedeb.dev/eagle.png">
@@ -360,7 +360,7 @@
       gap: 8px;
     }
 
-    .linux-badge {
+    .linux-badge, .os-badge {
       display: inline-flex;
       align-items: center;
       gap: 5px;
@@ -373,7 +373,43 @@
       color: var(--accent);
       letter-spacing: 0.08em;
       text-transform: uppercase;
+      white-space: nowrap;
     }
+
+    /* ── OS TABS (Linux / macOS install) ── */
+    .os-tabs {
+      margin-left: auto;
+      display: flex;
+      gap: 4px;
+    }
+
+    .os-tab {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted2);
+      background: none;
+      border: 1px solid transparent;
+      border-radius: 3px;
+      padding: 3px 10px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: color 0.15s, border-color 0.15s, background 0.15s;
+    }
+
+    .os-tab:hover { color: var(--accent); }
+
+    .os-tab.active {
+      color: var(--accent);
+      border-color: rgba(200,240,74,0.3);
+      background: rgba(200,240,74,0.08);
+    }
+
+    /* Only the selected OS's command is shown. The pane is a wrapper so the
+       .install-code inside it keeps its own flex layout. */
+    .os-pane { display: none; }
+    .os-pane.active { display: block; }
 
     /* ── SECTION HEADERS ── */
     .section-label {
@@ -1475,7 +1511,7 @@
 <!-- HERO -->
 <section id="hero">
   <div class="container">
-    <div class="hero-eyebrow hero-load">Linux &nbsp;·&nbsp; Free &nbsp;·&nbsp; Open Source</div>
+    <div class="hero-eyebrow hero-load">Linux &amp; macOS &nbsp;·&nbsp; Free &nbsp;·&nbsp; Open Source</div>
     <div class="hero-logo hero-load">
       <img src="https://freeclaw.eedeb.dev/eagle.png" alt="FreeClaw eagle">
       <h1 class="hero-title">Free<span class="accent">Claw</span></h1>
@@ -1497,14 +1533,32 @@
         <div class="dot y"></div>
         <div class="dot g"></div>
         <span class="label">terminal</span>
+        <div class="os-tabs">
+          <button class="os-tab active" data-os="linux" onclick="selectOS('linux')">🐧 Linux</button>
+          <button class="os-tab" data-os="mac" onclick="selectOS('mac')">🍎 macOS</button>
+        </div>
       </div>
-      <div class="install-code">
-        <code><span class="dim">$</span> curl -fsSL https://freeclaw.eedeb.dev/install.sh | bash</code>
-        <button class="copy-btn" id="copyBtn" onclick="copyInstall()">Copy</button>
+
+      <div class="os-pane active" data-os="linux">
+        <div class="install-code">
+          <code><span class="dim">$</span> curl -fsSL https://freeclaw.eedeb.dev/install.sh | bash</code>
+          <button class="copy-btn" onclick="copyInstall(this)">Copy</button>
+        </div>
+        <div class="install-note">
+          <span class="os-badge">🐧 Linux</span>
+          &nbsp;runs natively · requires git, python3, sudo
+        </div>
       </div>
-      <div class="install-note">
-        <span class="linux-badge">🐧 Linux only</span>
-        &nbsp;requires git, python3, sudo
+
+      <div class="os-pane" data-os="mac">
+        <div class="install-code">
+          <code><span class="dim">$</span> curl -fsSL https://freeclaw.eedeb.dev/install-mac.sh | bash</code>
+          <button class="copy-btn" onclick="copyInstall(this)">Copy</button>
+        </div>
+        <div class="install-note">
+          <span class="os-badge">🍎 macOS</span>
+          &nbsp;runs in Docker · requires git, Docker Desktop
+        </div>
       </div>
     </div>
   </div>
@@ -1866,7 +1920,7 @@
   <div class="container">
     <div class="section-label fade-in visible">Installation</div>
     <h2 class="section-title fade-in visible">One command.<br>You're done.</h2>
-    <p class="section-desc fade-in visible">The installer handles everything. You just need git, python3, and sudo. <span style="color:var(--accent)">Linux only.</span></p>
+    <p class="section-desc fade-in visible">The installer handles everything. On <span style="color:var(--accent)">Linux</span> it runs natively under systemd; on <span style="color:var(--accent)">macOS</span> it runs in Docker. Pick your platform below.</p>
 
     <div class="install-block fade-in visible" style="margin-bottom:48px;">
       <div class="install-bar">
@@ -1874,13 +1928,32 @@
         <div class="dot y"></div>
         <div class="dot g"></div>
         <span class="label">terminal</span>
+        <div class="os-tabs">
+          <button class="os-tab active" data-os="linux" onclick="selectOS('linux')">🐧 Linux</button>
+          <button class="os-tab" data-os="mac" onclick="selectOS('mac')">🍎 macOS</button>
+        </div>
       </div>
-      <div class="install-code">
-        <code><span class="dim">$</span> curl -fsSL https://freeclaw.eedeb.dev/install.sh | bash</code>
-        <button class="copy-btn" onclick="copyInstall()">Copy</button>
+
+      <div class="os-pane active" data-os="linux">
+        <div class="install-code">
+          <code><span class="dim">$</span> curl -fsSL https://freeclaw.eedeb.dev/install.sh | bash</code>
+          <button class="copy-btn" onclick="copyInstall(this)">Copy</button>
+        </div>
+        <div class="install-note">
+          <span class="os-badge">🐧 Linux</span>
+          &nbsp;requires git, python3, sudo
+        </div>
       </div>
-      <div class="install-note">
-        <span class="linux-badge">🐧 Linux only</span>
+
+      <div class="os-pane" data-os="mac">
+        <div class="install-code">
+          <code><span class="dim">$</span> curl -fsSL https://freeclaw.eedeb.dev/install-mac.sh | bash</code>
+          <button class="copy-btn" onclick="copyInstall(this)">Copy</button>
+        </div>
+        <div class="install-note">
+          <span class="os-badge">🍎 macOS</span>
+          &nbsp;requires git and Docker Desktop (running)
+        </div>
       </div>
     </div>
 
@@ -1889,7 +1962,7 @@
         <div class="step-num">1</div>
         <div class="step-body">
           <div class="step-title">Clone &amp; set up environment</div>
-          <div class="step-desc">The script clones the repo, creates a Python virtual environment, and installs all dependencies including PyTorch (CPU), Flask, the OpenAI SDK, and the Classy classifier.</div>
+          <div class="step-desc">The script clones the repo and installs every dependency — PyTorch (CPU), Flask, the OpenAI SDK, and the Classy classifier. On Linux that goes into a Python virtual environment; on macOS it's built into a Docker image instead. Either way you only get the files for your own platform.</div>
         </div>
       </div>
       <div class="step">
@@ -1903,7 +1976,7 @@
         <div class="step-num">3</div>
         <div class="step-body">
           <div class="step-title">FreeClaw starts automatically</div>
-          <div class="step-desc">The installer registers FreeClaw as a systemd service so it starts on boot, installs the <code>freeclaw</code> terminal client, and prints the local URL — something like <code>http://192.168.x.x:6767</code>.</div>
+          <div class="step-desc">On Linux the installer registers a systemd service so FreeClaw starts on boot; on macOS it starts the container with a restart policy that brings it back with Docker. Both install the <code>freeclaw</code> terminal client and print the local URL — <code>http://localhost:6767</code> on macOS, something like <code>http://192.168.x.x:6767</code> on Linux.</div>
         </div>
       </div>
       <div class="step">
@@ -1917,7 +1990,7 @@
         <div class="step-num">5</div>
         <div class="step-body">
           <div class="step-title">Start chatting</div>
-          <div class="step-desc">Chat from any browser on your network, or run <code>freeclaw</code> for the same agent in your terminal. Later on, <code>./update.sh</code> from the install directory pulls the latest changes and restarts the service, leaving your data alone.</div>
+          <div class="step-desc">Chat from any browser on your network, or run <code>freeclaw</code> for the same agent in your terminal. Later on, <code>./update.sh</code> on Linux (or <code>./update-mac.sh</code> on macOS) pulls the latest changes and restarts FreeClaw, leaving your data alone.</div>
         </div>
       </div>
     </div>
@@ -1953,9 +2026,38 @@
 </footer>
 
 <script>
+  // ── OS tabs (Linux / macOS) ──
+  // Every install block on the page switches together, so the hero and the
+  // install section never disagree about which platform you're looking at.
+  function selectOS(os) {
+    document.querySelectorAll('.os-tab').forEach(t =>
+      t.classList.toggle('active', t.dataset.os === os));
+    document.querySelectorAll('.os-pane').forEach(p =>
+      p.classList.toggle('active', p.dataset.os === os));
+    try { localStorage.setItem('freeclaw-os', os); } catch (e) {}
+  }
+  window.selectOS = selectOS;
+
+  // Default to the visitor's own platform, unless they've already chosen.
+  (function initOS() {
+    let os = null;
+    try { os = localStorage.getItem('freeclaw-os'); } catch (e) {}
+    if (os !== 'linux' && os !== 'mac') {
+      const ua = navigator.userAgent || '';
+      os = /Mac|iPhone|iPad|iPod/i.test(navigator.platform || ua) ? 'mac' : 'linux';
+    }
+    selectOS(os);
+  })();
+
   // ── Copy install command ──
-  function copyInstall() {
-    const cmd = 'curl -fsSL https://freeclaw.eedeb.dev/install.sh | bash';
+  // Reads the command out of the visible pane rather than hardcoding it, so
+  // the two stay in sync.
+  function copyInstall(btn) {
+    const pane = (btn && btn.closest('.os-pane')) || document.querySelector('.os-pane.active');
+    const code = pane && pane.querySelector('code');
+    const cmd = code
+      ? code.textContent.replace(/^\s*\$\s*/, '').trim()
+      : 'curl -fsSL https://freeclaw.eedeb.dev/install.sh | bash';
     navigator.clipboard && navigator.clipboard.writeText(cmd);
     document.querySelectorAll('.copy-btn').forEach(b => {
       b.textContent = 'Copied!'; b.classList.add('copied');
