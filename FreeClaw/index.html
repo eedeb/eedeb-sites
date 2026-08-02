@@ -521,6 +521,67 @@
     .sect-head.center { margin-left: auto; margin-right: auto; text-align: center; }
     .sect-head.center .lede { margin-left: auto; margin-right: auto; }
 
+    /* ═══ DEMO SHOT ═══ */
+    .shot {
+      max-width: 860px;
+      margin: 0 auto;
+      background: var(--dark);
+      border: 1px solid var(--dark-line);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+    }
+    .shot-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 16px;
+      background: var(--dark-2);
+      border-bottom: 1px solid var(--dark-line);
+    }
+    .shot-bar .d { width: 11px; height: 11px; border-radius: 50%; }
+    .shot-bar .d.r { background: #f2555a; }
+    .shot-bar .d.y { background: #f0b429; }
+    .shot-bar .d.g { background: #37b26c; }
+    .shot-bar .url {
+      margin: 0 auto;
+      font-family: var(--mono);
+      font-size: 11.5px;
+      color: #8d97a1;
+      background: rgba(0,0,0,0.35);
+      border: 1px solid var(--dark-line);
+      border-radius: 6px;
+      padding: 4px 22px;
+      letter-spacing: 0.02em;
+    }
+    .shot img { display: block; width: 100%; height: auto; }
+
+    .shot-caps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      max-width: 860px;
+      margin: 24px auto 0;
+    }
+    @media (max-width: 720px) { .shot-caps { grid-template-columns: 1fr; } }
+    .shot-cap {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 16px 18px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .shot-cap:hover { border-color: var(--line-2); box-shadow: var(--shadow-sm); }
+    .shot-cap .k {
+      display: block;
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--green);
+      margin-bottom: 6px;
+    }
+    .shot-cap p { font-size: 13px; color: var(--ink-2); line-height: 1.6; }
+
     /* ═══ FEATURES ═══ */
     #features { background: var(--paper-2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
     .feat-grid {
@@ -1258,6 +1319,7 @@
       <span>FreeClaw</span>
     </a>
     <ul class="nav-links" id="navLinks">
+      <li><a href="#demo">Demo</a></li>
       <li><a href="#features">Features</a></li>
       <li><a href="#how">How it works</a></li>
       <li><a href="#cost">Cost</a></li>
@@ -1280,6 +1342,7 @@
     </button>
   </div>
   <div class="mobile-menu" id="mobileMenu">
+    <a href="#demo">Demo</a>
     <a href="#features">Features</a>
     <a href="#how">How it works</a>
     <a href="#cost">Cost</a>
@@ -1357,6 +1420,42 @@
         </div>
         <h3>Yours, entirely</h3>
         <p>Runs on your machine, behind your password, against any OpenAI-compatible provider you choose. Conversations, memory, and files live on your disk. No account, no cloud dependency, no lock-in.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEMO -->
+<section id="demo" class="sect">
+  <div class="wrap">
+    <div class="sect-head center rv">
+      <div class="eyebrow center">In action</div>
+      <h2 class="display">One prompt.<br><em>Three tools.</em></h2>
+      <p class="lede">"Find the weather in Los Angeles, create a website to display it, and text the link to my friends." From a single message, FreeClaw searches the web, publishes a live page, and sends the text through a connected iMessage MCP server — one turn, start to finish.</p>
+    </div>
+
+    <div class="shot rv">
+      <div class="shot-bar">
+        <span class="d r"></span><span class="d y"></span><span class="d g"></span>
+        <span class="url">localhost:6767</span>
+      </div>
+      <img src="https://freeclaw.eedeb.dev/example.png"
+           alt="A real FreeClaw session: one prompt triggers a web search for Los Angeles weather, publishes a weather page, and texts the link through an iMessage MCP server"
+           width="949" height="726" loading="lazy">
+    </div>
+
+    <div class="shot-caps rv-group">
+      <div class="shot-cap">
+        <span class="k">web_search</span>
+        <p>Pulls live weather data from the web — scraped and structured without an extra model call.</p>
+      </div>
+      <div class="shot-cap">
+        <span class="k">create_page</span>
+        <p>Publishes the result as a live HTML page and hands back a shareable link.</p>
+      </div>
+      <div class="shot-cap">
+        <span class="k">mcp · imessage</span>
+        <p>Texts the link to friends through a connected MCP server's tool, mid-turn.</p>
       </div>
     </div>
   </div>
