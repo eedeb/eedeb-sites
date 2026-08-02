@@ -13,14 +13,31 @@
   <meta property="og:image" content="https://freeclaw.eedeb.dev/eagle.png">
   <meta name="twitter:card" content="summary">
   <link rel="icon" href="eagle.png" type="image/png">
+  <script>
+    // Applied before the stylesheet parses so there's no flash of the wrong theme.
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem('fc-theme'); } catch (e) {}
+      if (t !== 'light' && t !== 'dark') {
+        t = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+      document.documentElement.setAttribute('data-theme', t);
+      if (t === 'dark') {
+        var m = document.querySelector('meta[name="theme-color"]');
+        if (m) m.setAttribute('content', '#0f1115');
+      }
+    })();
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <noscript><style>.rv,.rv-group>*{opacity:1!important;transform:none!important;}</style></noscript>
+  <noscript><style>.rv,.rv-group>*,.hi{opacity:1!important;transform:none!important;}</style></noscript>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
+      /* "only light" opts out of Chrome's forced auto-darkening — we ship our own dark theme. */
+      color-scheme: only light;
       --paper: #faf9f6;
       --paper-2: #f3f1ec;
       --card: #ffffff;
@@ -43,6 +60,64 @@
       --mono: 'IBM Plex Mono', ui-monospace, monospace;
       --shadow-lg: 0 2px 4px rgba(20,24,29,0.04), 0 12px 32px rgba(20,24,29,0.08), 0 32px 80px rgba(20,24,29,0.10);
       --shadow-sm: 0 1px 2px rgba(20,24,29,0.05), 0 4px 12px rgba(20,24,29,0.05);
+      --nav-bg: rgba(250,249,246,0.85);
+      --hero-glow: rgba(16,107,60,0.055);
+      --btn-bg: #14181d;
+      --btn-fg: #ffffff;
+      --btn-bg-h: #2a323c;
+    }
+
+    :root[data-theme="dark"] {
+      color-scheme: dark;
+      --paper: #0f1115;
+      --paper-2: #161a20;
+      --card: #171c22;
+      --ink: #e9ecef;
+      --ink-2: #aab2bb;
+      --ink-3: #7c848e;
+      --line: #232933;
+      --line-2: #313947;
+      --green: #46b478;
+      --green-tint: rgba(70,180,120,0.12);
+      --dark: #0a0d10;
+      --dark-2: #12161b;
+      --dark-line: #272e37;
+      --gold: #d4a94e;
+      --shadow-lg: 0 2px 4px rgba(0,0,0,0.3), 0 12px 32px rgba(0,0,0,0.35), 0 32px 80px rgba(0,0,0,0.4);
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.3), 0 4px 12px rgba(0,0,0,0.25);
+      --nav-bg: rgba(15,17,21,0.85);
+      --hero-glow: rgba(70,180,120,0.08);
+      --btn-bg: #e9ecef;
+      --btn-fg: #14181d;
+      --btn-bg-h: #ffffff;
+    }
+
+    /* No-JS fallback: honor the system preference when the init script never ran. */
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme]) {
+        color-scheme: dark;
+        --paper: #0f1115;
+        --paper-2: #161a20;
+        --card: #171c22;
+        --ink: #e9ecef;
+        --ink-2: #aab2bb;
+        --ink-3: #7c848e;
+        --line: #232933;
+        --line-2: #313947;
+        --green: #46b478;
+        --green-tint: rgba(70,180,120,0.12);
+        --dark: #0a0d10;
+        --dark-2: #12161b;
+        --dark-line: #272e37;
+        --gold: #d4a94e;
+        --shadow-lg: 0 2px 4px rgba(0,0,0,0.3), 0 12px 32px rgba(0,0,0,0.35), 0 32px 80px rgba(0,0,0,0.4);
+        --shadow-sm: 0 1px 2px rgba(0,0,0,0.3), 0 4px 12px rgba(0,0,0,0.25);
+        --nav-bg: rgba(15,17,21,0.85);
+        --hero-glow: rgba(70,180,120,0.08);
+        --btn-bg: #e9ecef;
+        --btn-fg: #14181d;
+        --btn-bg-h: #ffffff;
+      }
     }
 
     html { scroll-behavior: smooth; }
@@ -87,7 +162,7 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(250,249,246,0.85);
+      background: var(--nav-bg);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--line);
@@ -147,15 +222,15 @@
     .btn-nav {
       font-size: 13.5px;
       font-weight: 600;
-      color: #fff;
-      background: var(--ink);
+      color: var(--btn-fg);
+      background: var(--btn-bg);
       text-decoration: none;
       padding: 9px 18px;
       border-radius: 7px;
       transition: background 0.15s, transform 0.1s;
       white-space: nowrap;
     }
-    .btn-nav:hover { background: #2a323c; }
+    .btn-nav:hover { background: var(--btn-bg-h); }
 
     .nav-toggle {
       display: none; margin-left: auto;
@@ -238,11 +313,12 @@
     }
     .btn:active { transform: translateY(1px); }
     .btn-primary {
-      background: var(--ink);
-      color: #fff;
+      background: var(--btn-bg);
+      color: var(--btn-fg);
       box-shadow: var(--shadow-sm);
     }
-    .btn-primary:hover { background: #2a323c; }
+    .btn-primary:hover { background: var(--btn-bg-h); transform: translateY(-1px); }
+    .btn-primary:active { transform: translateY(1px); }
     .btn-outline {
       background: var(--card);
       color: var(--ink);
@@ -257,10 +333,10 @@
 
     /* ═══ HERO ═══ */
     #hero {
-      padding: 92px 0 0;
+      padding: 92px 0 96px;
       text-align: center;
       background:
-        radial-gradient(70% 55% at 50% 0%, rgba(16,107,60,0.055), transparent 70%),
+        radial-gradient(70% 55% at 50% 0%, var(--hero-glow), transparent 70%),
         var(--paper);
       overflow: hidden;
     }
@@ -324,6 +400,7 @@
       align-items: center;
       gap: 4px;
       background: var(--dark);
+      border: 1px solid var(--dark-line);
       border-radius: 10px;
       padding: 6px 6px 6px 18px;
       box-shadow: var(--shadow-sm);
@@ -373,54 +450,9 @@
       margin-top: 14px;
     }
 
-    /* product frame */
-    .frame-wrap {
-      margin: 64px auto 0;
-      max-width: 860px;
-      padding: 0 32px;
-      position: relative;
-    }
-    .frame-wrap::after {
-      content: '';
-      position: absolute;
-      left: 0; right: 0; bottom: 0; height: 1px;
-      background: var(--line);
-    }
-    .frame {
-      background: #0d1013;
-      border: 1px solid rgba(20,24,29,0.9);
-      border-bottom: none;
-      border-radius: 14px 14px 0 0;
-      overflow: hidden;
-      box-shadow: var(--shadow-lg);
-    }
-    .frame-bar {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 12px 16px;
-      background: #171b20;
-      border-bottom: 1px solid #23292f;
-    }
-    .frame-bar .d { width: 11px; height: 11px; border-radius: 50%; }
-    .frame-bar .d.r { background: #f2555a; }
-    .frame-bar .d.y { background: #f0b429; }
-    .frame-bar .d.g { background: #37b26c; }
-    .frame-bar .url {
-      margin: 0 auto;
-      font-family: var(--mono);
-      font-size: 11.5px;
-      color: #8d97a1;
-      background: #0d1013;
-      border: 1px solid #23292f;
-      border-radius: 6px;
-      padding: 4px 22px;
-      letter-spacing: 0.02em;
-    }
-    .frame img { display: block; width: 100%; height: auto; }
-
     /* ═══ STAT BAND ═══ */
     #stats {
+      border-top: 1px solid var(--line);
       border-bottom: 1px solid var(--line);
       background: var(--card);
     }
@@ -739,6 +771,7 @@
 
     .codecard {
       background: var(--dark);
+      border: 1px solid var(--dark-line);
       border-radius: 12px;
       overflow: hidden;
       box-shadow: var(--shadow-lg);
@@ -856,6 +889,7 @@
     }
     .term {
       background: var(--dark);
+      border: 1px solid var(--dark-line);
       border-radius: 12px;
       overflow: hidden;
       box-shadow: var(--shadow-lg);
@@ -1105,6 +1139,62 @@
     .rv-group.on > *:nth-child(11) { transition-delay: 0.50s; }
     .rv-group.on > *:nth-child(12) { transition-delay: 0.55s; }
 
+    /* ═══ HERO ENTRANCE ═══ */
+    .hi { opacity: 0; animation: heroIn 0.8s cubic-bezier(0.22, 0.61, 0.36, 1) forwards; }
+    .hi-1 { animation-delay: 0.05s; }
+    .hi-2 { animation-delay: 0.16s; }
+    .hi-3 { animation-delay: 0.30s; }
+    .hi-4 { animation-delay: 0.42s; }
+    .hi-5 { animation-delay: 0.54s; }
+    @keyframes heroIn {
+      from { opacity: 0; transform: translateY(22px); }
+      to { opacity: 1; transform: none; }
+    }
+
+    /* ═══ MICRO-INTERACTIONS ═══ */
+    .brand img { transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); }
+    .brand:hover img { transform: rotate(-6deg) scale(1.06); }
+
+    .feat .ico, .pillar .ico { transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); }
+    .feat:hover .ico, .pillar:hover .ico { transform: translateY(-3px) scale(1.06); }
+
+    .t-num { transition: background 0.25s, border-color 0.25s, color 0.25s; }
+    .t-step:hover .t-num { background: var(--green); border-color: var(--green); color: #fff; }
+
+    .pill code::after, .approval .cmd::after {
+      content: '▍';
+      margin-left: 4px;
+      color: #4cc47e;
+      animation: blink 1.15s steps(1) infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    /* ═══ THEME TOGGLE ═══ */
+    .theme-btn {
+      width: 36px; height: 36px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      color: var(--ink-2);
+      border: 1px solid var(--line-2);
+      border-radius: 7px;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: color 0.15s, background 0.15s, border-color 0.15s;
+    }
+    .theme-btn:hover { color: var(--ink); background: var(--paper-2); }
+    .theme-btn svg { width: 17px; height: 17px; }
+    .theme-btn .ic-sun { display: none; }
+    :root[data-theme="dark"] .theme-btn .ic-sun { display: block; }
+    :root[data-theme="dark"] .theme-btn .ic-moon { display: none; }
+
+    /* Cross-fade while switching themes (class is applied briefly by JS). */
+    html.theming, html.theming body { transition: background-color 0.35s ease, color 0.35s ease; }
+    html.theming *, html.theming *::before, html.theming *::after {
+      transition: background-color 0.35s ease, color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease !important;
+    }
+
     /* ═══ RESPONSIVE NAV ═══ */
     @media (max-width: 880px) {
       .nav-links, .nav-cta .nav-gh { display: none; }
@@ -1137,7 +1227,6 @@
       #hero { padding-top: 64px; }
       .sect, #pillars { padding: 68px 0; }
       #control { padding: 76px 0; }
-      .frame-wrap { padding: 0 16px; }
       .pill { flex-wrap: wrap; padding: 10px 14px; gap: 10px; border-radius: 12px; }
       .pill code { overflow-x: auto; max-width: 100%; }
       .cta-band { padding: 52px 26px; }
@@ -1150,7 +1239,7 @@
         transition-duration: 0.001ms !important;
         scroll-behavior: auto !important;
       }
-      .rv, .rv-group > * { opacity: 1 !important; transform: none !important; }
+      .rv, .rv-group > *, .hi { opacity: 1 !important; transform: none !important; }
     }
   </style>
 </head>
@@ -1180,6 +1269,10 @@
         <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.42 7.42 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
         GitHub
       </a>
+      <button class="theme-btn" onclick="toggleTheme()" aria-label="Toggle dark mode">
+        <svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.1A8.5 8.5 0 0 1 9.9 3.5a8.5 8.5 0 1 0 10.6 10.6z"/></svg>
+        <svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.3m0 14.4v2.3M2.5 12h2.3m14.4 0h2.3M5 5l1.7 1.7m10.6 10.6L19 19M19 5l-1.7 1.7M6.7 17.3 5 19"/></svg>
+      </button>
       <a href="#install" class="btn-nav">Install</a>
     </div>
     <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">
@@ -1200,26 +1293,27 @@
 <!-- HERO -->
 <section id="hero">
   <div class="wrap">
-    <div class="hero-badge rv on"><span class="pulse"></span> Open source &nbsp;·&nbsp; Self-hosted &nbsp;·&nbsp; <b>Linux &amp; macOS</b></div>
-    <h1 class="hero-h rv on">The AI agent that <em>doesn't burn your&nbsp;money.</em></h1>
-    <p class="hero-lede rv on">
+    <div class="hero-badge hi hi-1"><span class="pulse"></span> Open source &nbsp;·&nbsp; Self-hosted &nbsp;·&nbsp; <b>Linux · macOS · Windows (WSL)</b></div>
+    <h1 class="hero-h hi hi-2">The AI agent that <em>doesn't burn your&nbsp;money.</em></h1>
+    <p class="hero-lede hi hi-3">
       FreeClaw runs on your own hardware and treats every token as money — because it is.
       Local intent routing, trimmed context, prompt caching, and free search keep a fully
       tool-using agent running all day for fractions of a cent.
     </p>
-    <div class="hero-ctas rv on">
+    <div class="hero-ctas hi hi-4">
       <a href="#install" class="btn btn-primary">Get started</a>
       <a href="https://github.com/eedeb/FreeClaw" target="_blank" rel="noopener" class="btn btn-outline">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.42 7.42 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
         View source
       </a>
     </div>
-    <div class="rv on">
+    <div class="hi hi-5">
       <div class="pill">
         <code id="heroCmd"><span class="p">$</span>curl -fsSL https://freeclaw.eedeb.dev/install.sh | bash</code>
         <div class="pill-os">
           <button data-os="linux" onclick="selectOS('linux')">Linux</button>
           <button data-os="mac" onclick="selectOS('mac')">macOS</button>
+          <button data-os="win" onclick="selectOS('win')">Windows</button>
         </div>
         <button onclick="copyCmd(this)">Copy</button>
       </div>
@@ -1227,20 +1321,11 @@
     </div>
   </div>
 
-  <div class="frame-wrap rv on">
-    <div class="frame">
-      <div class="frame-bar">
-        <span class="d r"></span><span class="d y"></span><span class="d g"></span>
-        <span class="url">localhost:6767</span>
-      </div>
-      <img src="demo.gif" alt="The FreeClaw chat interface answering a live question using web search" width="720" height="572">
-    </div>
-  </div>
 </section>
 
 <!-- STATS -->
 <section id="stats">
-  <div class="stats-row">
+  <div class="stats-row rv-group">
     <div class="stat"><div class="n">1</div><div class="l">command to install</div></div>
     <div class="stat"><div class="n"><span>0</span></div><div class="l">tokens spent on routing</div></div>
     <div class="stat"><div class="n"><span>0</span></div><div class="l">API keys collected at install</div></div>
@@ -1573,7 +1658,7 @@ client.chat.completions.<span class="f">create</span>(
     <div class="sect-head center rv">
       <div class="eyebrow center">Installation</div>
       <h2 class="display">One command.<br><em>You're done.</em></h2>
-      <p class="lede">The installer handles everything. On Linux it runs natively under systemd; on macOS it runs in Docker.</p>
+      <p class="lede">The installer handles everything. On Linux it runs natively under systemd; on macOS it runs in Docker; on Windows it runs inside <a href="https://learn.microsoft.com/windows/wsl/install" target="_blank" rel="noopener">WSL</a> using the Linux installer.</p>
     </div>
 
     <div class="inst-shell">
@@ -1584,6 +1669,7 @@ client.chat.completions.<span class="f">create</span>(
           <div class="term-tabs">
             <button data-os="linux" onclick="selectOS('linux')">Linux</button>
             <button data-os="mac" onclick="selectOS('mac')">macOS</button>
+            <button data-os="win" onclick="selectOS('win')">Windows</button>
           </div>
         </div>
         <div class="term-body">
@@ -1702,6 +1788,10 @@ client.chat.completions.<span class="f">create</span>(
     mac: {
       cmd: 'curl -fsSL https://freeclaw.eedeb.dev/install-mac.sh | bash',
       note: 'Runs in Docker · needs git and Docker Desktop (running)'
+    },
+    win: {
+      cmd: 'curl -fsSL https://freeclaw.eedeb.dev/install.sh | bash',
+      note: 'Runs via WSL · in PowerShell: wsl --install, reboot, then paste this in your WSL terminal'
     }
   };
   var currentOS = 'linux';
@@ -1726,12 +1816,28 @@ client.chat.completions.<span class="f">create</span>(
   (function initOS() {
     var os = null;
     try { os = localStorage.getItem('freeclaw-os'); } catch (e) {}
-    if (os !== 'linux' && os !== 'mac') {
-      var ua = navigator.userAgent || '';
-      os = /Mac|iPhone|iPad|iPod/i.test(navigator.platform || ua) ? 'mac' : 'linux';
+    if (os !== 'linux' && os !== 'mac' && os !== 'win') {
+      var p = navigator.platform || navigator.userAgent || '';
+      if (/Mac|iPhone|iPad|iPod/i.test(p)) os = 'mac';
+      else if (/Win/i.test(p)) os = 'win';
+      else os = 'linux';
     }
     selectOS(os);
   })();
+
+  // ── Theme toggle ──
+  function toggleTheme() {
+    var r = document.documentElement;
+    var t = r.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    r.classList.add('theming');
+    r.setAttribute('data-theme', t);
+    try { localStorage.setItem('fc-theme', t); } catch (e) {}
+    var m = document.querySelector('meta[name="theme-color"]');
+    if (m) m.setAttribute('content', t === 'dark' ? '#0f1115' : '#faf9f6');
+    clearTimeout(toggleTheme._t);
+    toggleTheme._t = setTimeout(function () { r.classList.remove('theming'); }, 450);
+  }
+  window.toggleTheme = toggleTheme;
 
   function copyCmd(btn) {
     if (navigator.clipboard) navigator.clipboard.writeText(CMDS[currentOS].cmd);
