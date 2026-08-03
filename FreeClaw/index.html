@@ -219,6 +219,11 @@
     .nav-gh:hover { color: var(--ink); background: var(--paper-2); }
     .nav-gh svg { width: 17px; height: 17px; }
 
+    /* Icon-only nav link (Discord) — square like the theme button */
+    .nav-gh.nav-icon { padding: 7px; }
+    .nav-gh.nav-icon svg { width: 19px; height: 19px; }
+    .nav-gh.nav-icon:hover { color: #5865f2; }
+
     .btn-nav {
       font-size: 13.5px;
       font-weight: 600;
@@ -1113,6 +1118,21 @@
     }
     .cta-band .btn-outline:hover { border-color: #fff; }
 
+    .cta-discord {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin-top: 26px;
+      font-size: 14px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.78);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .cta-discord svg { width: 19px; height: 19px; }
+    .cta-discord:hover { color: #fff; }
+
     /* ═══ FOOTER ═══ */
     footer {
       background: var(--dark);
@@ -1261,7 +1281,7 @@
 
     /* ═══ RESPONSIVE NAV ═══ */
     @media (max-width: 880px) {
-      .nav-links, .nav-cta .nav-gh { display: none; }
+      .nav-links, .nav-cta .nav-gh:not(.nav-icon) { display: none; }
       .nav-toggle { display: block; }
       .mobile-menu {
         display: none;
@@ -1352,6 +1372,8 @@
       .btn-nav { padding: 8px 13px; font-size: 13px; }
       .theme-btn { width: 34px; height: 34px; }
       .nav-toggle { width: 34px; }
+      /* Discord still reachable from the mobile menu */
+      .nav-cta .nav-icon { display: none; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -1368,7 +1390,7 @@
 
 <!-- TOPLINE -->
 <div class="topline">
-  FreeClaw v0.1.0 is available <span class="tl-mid"><span class="dot">·</span> free &amp; open source, MIT licensed</span> <span class="dot">·</span> <a href="https://github.com/eedeb/FreeClaw" target="_blank" rel="noopener">Star it on GitHub</a>
+  FreeClaw v0.1.0 is available <span class="tl-mid"><span class="dot">·</span> free &amp; open source, MIT licensed</span> <span class="dot">·</span> <a href="https://discord.gg/2PbjzKYgKh" target="_blank" rel="noopener">Join the Discord</a>
 </div>
 
 <!-- NAV -->
@@ -1391,6 +1413,9 @@
         <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.42 7.42 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
         GitHub
       </a>
+      <a href="https://discord.gg/2PbjzKYgKh" target="_blank" rel="noopener" class="nav-gh nav-icon" aria-label="Join the FreeClaw Discord" title="Join the Discord">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.27 5.33A16.5 16.5 0 0 0 15.2 4.1a.06.06 0 0 0-.07.03c-.18.32-.37.73-.51 1.06a15.4 15.4 0 0 0-4.62 0c-.14-.34-.34-.74-.52-1.06a.06.06 0 0 0-.07-.03c-1.4.24-2.75.66-4.06 1.23a.06.06 0 0 0-.03.02C2.66 9.19 1.96 12.94 2.3 16.65a.07.07 0 0 0 .03.05 16.6 16.6 0 0 0 4.99 2.51.06.06 0 0 0 .07-.02c.39-.53.73-1.08 1.02-1.67a.06.06 0 0 0-.03-.09c-.54-.2-1.06-.45-1.56-.74a.06.06 0 0 1 0-.11l.31-.24a.06.06 0 0 1 .06 0c3.27 1.5 6.81 1.5 10.04 0a.06.06 0 0 1 .07 0l.31.24a.06.06 0 0 1 0 .11c-.5.29-1.02.54-1.56.74a.06.06 0 0 0-.04.09c.3.59.64 1.14 1.02 1.67a.06.06 0 0 0 .07.02 16.5 16.5 0 0 0 5-2.51.06.06 0 0 0 .03-.05c.4-4.29-.69-8.01-2.92-11.3a.05.05 0 0 0-.03-.02ZM8.85 14.39c-.98 0-1.79-.9-1.79-2.01 0-1.11.79-2.01 1.79-2.01 1.01 0 1.81.91 1.8 2.01 0 1.11-.8 2.01-1.8 2.01Zm6.31 0c-.98 0-1.79-.9-1.79-2.01 0-1.11.79-2.01 1.79-2.01 1.01 0 1.81.91 1.8 2.01 0 1.11-.79 2.01-1.8 2.01Z"/></svg>
+      </a>
       <button class="theme-btn" onclick="toggleTheme()" aria-label="Toggle dark mode">
         <svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.1A8.5 8.5 0 0 1 9.9 3.5a8.5 8.5 0 1 0 10.6 10.6z"/></svg>
         <svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.3m0 14.4v2.3M2.5 12h2.3m14.4 0h2.3M5 5l1.7 1.7m10.6 10.6L19 19M19 5l-1.7 1.7M6.7 17.3 5 19"/></svg>
@@ -1410,6 +1435,7 @@
     <a href="#api">API</a>
     <a href="#install">Install</a>
     <a href="https://github.com/eedeb/FreeClaw" target="_blank" rel="noopener">GitHub ↗</a>
+    <a href="https://discord.gg/2PbjzKYgKh" target="_blank" rel="noopener">Discord ↗</a>
   </div>
 </header>
 
@@ -1886,6 +1912,10 @@ client.chat.completions.<span class="f">create</span>(
         <a href="#install" class="btn btn-primary">Install FreeClaw</a>
         <a href="https://github.com/eedeb/FreeClaw" target="_blank" rel="noopener" class="btn btn-outline">View on GitHub</a>
       </div>
+      <a href="https://discord.gg/2PbjzKYgKh" target="_blank" rel="noopener" class="cta-discord">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.27 5.33A16.5 16.5 0 0 0 15.2 4.1a.06.06 0 0 0-.07.03c-.18.32-.37.73-.51 1.06a15.4 15.4 0 0 0-4.62 0c-.14-.34-.34-.74-.52-1.06a.06.06 0 0 0-.07-.03c-1.4.24-2.75.66-4.06 1.23a.06.06 0 0 0-.03.02C2.66 9.19 1.96 12.94 2.3 16.65a.07.07 0 0 0 .03.05 16.6 16.6 0 0 0 4.99 2.51.06.06 0 0 0 .07-.02c.39-.53.73-1.08 1.02-1.67a.06.06 0 0 0-.03-.09c-.54-.2-1.06-.45-1.56-.74a.06.06 0 0 1 0-.11l.31-.24a.06.06 0 0 1 .06 0c3.27 1.5 6.81 1.5 10.04 0a.06.06 0 0 1 .07 0l.31.24a.06.06 0 0 1 0 .11c-.5.29-1.02.54-1.56.74a.06.06 0 0 0-.04.09c.3.59.64 1.14 1.02 1.67a.06.06 0 0 0 .07.02 16.5 16.5 0 0 0 5-2.51.06.06 0 0 0 .03-.05c.4-4.29-.69-8.01-2.92-11.3a.05.05 0 0 0-.03-.02ZM8.85 14.39c-.98 0-1.79-.9-1.79-2.01 0-1.11.79-2.01 1.79-2.01 1.01 0 1.81.91 1.8 2.01 0 1.11-.8 2.01-1.8 2.01Zm6.31 0c-.98 0-1.79-.9-1.79-2.01 0-1.11.79-2.01 1.79-2.01 1.01 0 1.81.91 1.8 2.01 0 1.11-.79 2.01-1.8 2.01Z"/></svg>
+        Questions? Join the Discord
+      </a>
     </div>
   </div>
 </section>
@@ -1924,6 +1954,7 @@ client.chat.completions.<span class="f">create</span>(
         <h4>Project</h4>
         <ul>
           <li><a href="https://github.com/eedeb/FreeClaw" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="https://discord.gg/2PbjzKYgKh" target="_blank" rel="noopener">Discord community</a></li>
           <li><a href="https://github.com/eedeb/FreeClaw/issues" target="_blank" rel="noopener">Report an issue</a></li>
           <li><a href="https://github.com/eedeb/classy" target="_blank" rel="noopener">Classy-AI</a></li>
           <li><a href="https://eedeb.dev/">eedeb.dev</a></li>
