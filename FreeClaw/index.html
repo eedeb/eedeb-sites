@@ -120,7 +120,7 @@
       }
     }
 
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 
     body {
       background: var(--paper);
@@ -808,7 +808,10 @@
       gap: 48px;
       align-items: start;
     }
-    @media (max-width: 880px) { #api .api-grid { grid-template-columns: 1fr; gap: 36px; } }
+    @media (max-width: 880px) {
+      #api .api-grid { grid-template-columns: 1fr; gap: 36px; }
+      .codecard { position: static; }
+    }
 
     .api-list { display: flex; flex-direction: column; }
     .api-item {
@@ -1285,13 +1288,70 @@
     @media (max-width: 600px) {
       .wrap { padding: 0 22px; }
       .nav-inner { padding: 0 22px; }
-      #hero { padding-top: 64px; }
-      .sect, #pillars { padding: 68px 0; }
-      #control { padding: 76px 0; }
-      .pill { flex-wrap: wrap; padding: 10px 14px; gap: 10px; border-radius: 12px; }
-      .pill code { overflow-x: auto; max-width: 100%; }
-      .cta-band { padding: 52px 26px; }
-      .t-step { padding-left: 62px; }
+      #hero { padding-top: 56px; }
+      .sect, #pillars { padding: 64px 0; }
+      #control { padding: 72px 0; }
+      .sect-head, .sect-head.center { margin-bottom: 40px; }
+      .hero-lede { font-size: 16px; }
+
+      /* Full-width tap targets for the primary actions */
+      .hero-ctas { flex-direction: column; align-items: stretch; }
+      .hero-ctas .btn { width: 100%; justify-content: center; }
+      .cta-band .btn { width: 100%; justify-content: center; }
+
+      /* Install pill: command on its own row, controls beneath */
+      .pill {
+        display: flex;
+        flex-wrap: wrap;
+        width: 100%;
+        padding: 12px 14px;
+        gap: 10px;
+        border-radius: 12px;
+      }
+      .pill code { flex: 1 1 100%; overflow-x: auto; max-width: 100%; padding-bottom: 2px; }
+      .pill-os { margin-left: 0; }
+      .pill > button { margin-left: auto; }
+
+      /* Install terminal: stack the command and copy button */
+      .term-bar { flex-wrap: wrap; row-gap: 8px; }
+      .term-bar .t { display: none; }
+      .term-tabs { margin-left: auto; }
+      .term-body { padding: 18px 18px 20px; }
+      .term-line { flex-direction: column; align-items: stretch; gap: 12px; }
+      .term-line code { overflow-x: auto; padding-bottom: 2px; }
+      .term-copy { width: 100%; padding: 10px 14px; }
+
+      .codecard pre { padding: 18px 18px; font-size: 12px; }
+      .approval { padding: 14px; }
+      .cta-band { padding: 48px 22px; border-radius: 14px; }
+      .t-step { padding-left: 60px; padding-bottom: 36px; }
+      .t-num { width: 40px; height: 40px; font-size: 14px; }
+      .timeline::before { left: 20px; }
+      .inst-step { grid-template-columns: 42px 1fr; }
+      .trust-card, .ctrl-card { padding: 22px; }
+      .cost-item { padding: 24px 22px; }
+      .stat { padding: 26px 16px; }
+      .stat .n { font-size: 28px; }
+      .foot-bottom { flex-direction: column; align-items: flex-start; gap: 6px; }
+    }
+
+    @media (max-width: 480px) {
+      .topline { font-size: 10.5px; padding: 7px 12px; }
+      .topline .tl-mid { display: none; }
+      .hero-badge { font-size: 12px; padding: 6px 14px; }
+      .hero-badge .badge-os { display: none; }
+      h1.hero-h { font-size: clamp(36px, 11vw, 44px); }
+      .shot-bar .url { padding: 4px 12px; }
+    }
+
+    @media (max-width: 380px) {
+      .wrap, .nav-inner { padding: 0 16px; }
+      .nav-inner { gap: 8px; }
+      .brand span { font-size: 17px; }
+      .brand img { width: 26px; height: 26px; }
+      .btn-nav { padding: 8px 13px; font-size: 13px; }
+      .theme-btn { width: 34px; height: 34px; }
+      .nav-toggle { width: 34px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -1308,7 +1368,7 @@
 
 <!-- TOPLINE -->
 <div class="topline">
-  FreeClaw v0.1.0 is available <span class="dot">·</span> free &amp; open source, MIT licensed <span class="dot">·</span> <a href="https://github.com/eedeb/FreeClaw" target="_blank" rel="noopener">Star it on GitHub</a>
+  FreeClaw v0.1.0 is available <span class="tl-mid"><span class="dot">·</span> free &amp; open source, MIT licensed</span> <span class="dot">·</span> <a href="https://github.com/eedeb/FreeClaw" target="_blank" rel="noopener">Star it on GitHub</a>
 </div>
 
 <!-- NAV -->
@@ -1356,7 +1416,7 @@
 <!-- HERO -->
 <section id="hero">
   <div class="wrap">
-    <div class="hero-badge hi hi-1"><span class="pulse"></span> Open source &nbsp;·&nbsp; Self-hosted &nbsp;·&nbsp; <b>Linux · macOS · Windows (WSL)</b></div>
+    <div class="hero-badge hi hi-1"><span class="pulse"></span> Open source &nbsp;·&nbsp; Self-hosted<span class="badge-os"> &nbsp;·&nbsp; <b>Linux · macOS · Windows (WSL)</b></span></div>
     <h1 class="hero-h hi hi-2">The AI agent that <em>doesn't burn your&nbsp;money.</em></h1>
     <p class="hero-lede hi hi-3">
       FreeClaw runs on your own hardware and treats every token as money — because it is.
