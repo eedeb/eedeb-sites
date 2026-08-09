@@ -15,17 +15,43 @@
         background: #090e14;
     }
 
+    /* everything that gets rattled by the blast */
+    #shake {
+        position: fixed;
+        inset: 0;
+        transform-origin: 50% 50%;
+    }
+
     /* no-ai.html, filling the viewport */
     #stage {
         display: block;
         width: 100%;
         height: 100%;
         border: 0;
-        transform-origin: 50% 0%;
-        will-change: transform, opacity, filter;
+    }
+    #stage.gone { visibility: hidden; }
+
+    /* the page, pre-cut into pieces — hidden until detonation */
+    #shards {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        visibility: hidden;
+    }
+    #shards.on { visibility: visible; }
+    .shard {
+        position: absolute;
+        overflow: hidden;
+        will-change: transform, opacity;
+        backface-visibility: hidden;
+    }
+    .shard iframe {
+        position: absolute;
+        border: 0;
+        pointer-events: none;
     }
 
-    /* revealed behind the page as it drops away */
+    /* revealed behind the page once it's blown apart */
     #void {
         position: fixed;
         inset: 0;
@@ -34,15 +60,56 @@
             radial-gradient(ellipse at 50% 40%, rgba(56, 182, 255, 0.10), transparent 60%),
             #090e14;
         opacity: 0;
-        transition: opacity 0.45s ease;
+        transition: opacity 0.3s ease;
     }
     #void.lit { opacity: 1; }
 
+    /* charge-up core, then the blast itself */
+    #core, #flash {
+        position: fixed;
+        pointer-events: none;
+        opacity: 0;
+    }
+    #core {
+        width: 20px; height: 20px;
+        margin: -10px 0 0 -10px;
+        border-radius: 50%;
+        background: #fff;
+        box-shadow: 0 0 30px 10px rgba(56,182,255,0.9), 0 0 80px 30px rgba(245,166,35,0.5);
+        z-index: 60;
+    }
+    #flash {
+        inset: 0;
+        z-index: 80;
+        background: radial-gradient(circle at var(--ox, 50%) var(--oy, 50%),
+            #ffffff 0%, rgba(200,235,255,0.95) 18%, rgba(56,182,255,0.5) 38%, transparent 70%);
+    }
+
+    /* shockwaves + sparks live here */
+    #fx {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 70;
+    }
+    .ring {
+        position: absolute;
+        border-radius: 50%;
+        border: 3px solid rgba(200, 235, 255, 0.9);
+        box-shadow: 0 0 30px rgba(56,182,255,0.8), inset 0 0 30px rgba(56,182,255,0.5);
+        will-change: transform, opacity;
+    }
+    .spark {
+        position: absolute;
+        border-radius: 50%;
+        will-change: transform, opacity;
+    }
+
+    /* fallback if the shards aren't ready yet */
     .falling #stage {
         animation: fall 900ms cubic-bezier(0.45, 0, 0.85, 0.5) forwards;
         pointer-events: none;
     }
-
     @keyframes fall {
         0%   { transform: none; opacity: 1; filter: none; }
         12%  { transform: translateY(-2.5vh) scale(1.015) rotate(-0.5deg); opacity: 1; }
@@ -57,30 +124,38 @@
 </head>
 <body>
     <div id="void"></div>
-    <iframe id="stage" src="no-ai.html" title="eedeb.dev"></iframe>
+    <div id="shake">
+        <iframe id="stage" src="no-ai.html" title="eedeb.dev"></iframe>
+        <div id="shards" aria-hidden="true"></div>
+    </div>
+    <div id="core"></div>
+    <div id="flash"></div>
+    <div id="fx"></div>
 
     <script>
     (function () {
-        var stage = document.getElementById('stage');
-        var falling = false;
+        var stage   = document.getElementById('stage');
+        var shakeEl = document.getElementById('shake');
+        var shardWrap = document.getElementById('shards');
+        var coreEl  = document.getElementById('core');
+        var flashEl = document.getElementById('flash');
+        var fxEl    = document.getElementById('fx');
+        var voidEl  = document.getElementById('void');
 
-        function drop() {
-            if (falling) return;
-            falling = true;
-            document.getElementById('void').classList.add('lit');
-            document.documentElement.classList.add('falling');
-            var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-            setTimeout(function () {
-                window.location.href = 'ai.html';
-            }, reduced ? 320 : 900);
-        }
+        var CHARGE = 220;       // wind-up before the bang
+        var BLAST  = 1050;      // debris flight time
+        var shards = [];
+        var detonated = false;
+        var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        function rand(a, b) { return a + Math.random() * (b - a); }
 
         // A freshly created iframe holds an about:blank document that already
         // reports readyState "complete", so check we have the real page.
-        function loadedDoc() {
+        function loadedDoc(frame) {
             var doc;
             try {
-                doc = stage.contentDocument;
+                doc = frame.contentDocument;
             } catch (err) {
                 return null;
             }
@@ -89,10 +164,214 @@
             return doc;
         }
 
+        /* ── Pre-cut the page into shards ──────────────────────────────
+           Each shard is a clipped window onto its own copy of no-ai.html,
+           offset so it shows exactly one tile of the viewport. Same-origin
+           and cached, so this costs one network request in total. */
+        function buildShards() {
+            if (shards.length) return;
+            var vw = window.innerWidth, vh = window.innerHeight;
+            var cols = vw < 600 ? 3 : 4;
+            var rows = vw < 600 ? 4 : 3;
+            var frag = document.createDocumentFragment();
+
+            for (var r = 0; r < rows; r++) {
+                for (var c = 0; c < cols; c++) {
+                    var x = Math.floor(c * vw / cols);
+                    var y = Math.floor(r * vh / rows);
+                    var w = Math.ceil((c + 1) * vw / cols) - x;
+                    var h = Math.ceil((r + 1) * vh / rows) - y;
+
+                    var piece = document.createElement('div');
+                    piece.className = 'shard';
+                    piece.style.cssText = 'left:' + x + 'px;top:' + y + 'px;width:' + w + 'px;height:' + h + 'px';
+
+                    var inner = document.createElement('iframe');
+                    inner.src = 'no-ai.html';
+                    inner.setAttribute('scrolling', 'no');
+                    inner.setAttribute('tabindex', '-1');
+                    inner.setAttribute('aria-hidden', 'true');
+                    inner.style.cssText = 'width:' + vw + 'px;height:' + vh + 'px;left:' + (-x) + 'px;top:' + (-y) + 'px';
+
+                    piece.appendChild(inner);
+                    frag.appendChild(piece);
+                    shards.push({ el: piece, frame: inner, cx: x + w / 2, cy: y + h / 2 });
+                }
+            }
+            shardWrap.appendChild(frag);
+        }
+
+        // Match every shard to what the live page is currently showing.
+        function syncShards() {
+            var src = loadedDoc(stage);
+            var scrollY = src ? (stage.contentWindow.scrollY || 0) : 0;
+            var ok = true;
+            shards.forEach(function (s) {
+                var doc = loadedDoc(s.frame);
+                if (!doc) { ok = false; return; }
+                doc.documentElement.style.overflow = 'hidden';
+                s.frame.contentWindow.scrollTo(0, scrollY);
+            });
+            return ok;
+        }
+
+        /* ── The blast ─────────────────────────────────────────────── */
+        function launchShards(ox, oy) {
+            var vw = window.innerWidth, vh = window.innerHeight;
+            var maxDist = Math.hypot(vw, vh) / 2;
+
+            shards.forEach(function (s) {
+                var ax = s.cx - ox, ay = s.cy - oy;
+                var dist = Math.hypot(ax, ay) || 1;
+                ax /= dist; ay /= dist;
+
+                // pieces near the blast get thrown hardest
+                var near = 1 - Math.min(dist / maxDist, 1);
+                var force = 170 + near * 330 + rand(0, 170);
+                var dx = ax * force + rand(-70, 70);
+                var dy = ay * force + rand(-70, 70);
+                var peak = dy * 0.4 - rand(90, 200);         // up first…
+                var land = dy + rand(300, 540);              // …then gravity wins
+                var rot = rand(-190, 190);
+
+                s.el.animate([
+                    { transform: 'translate(0,0) rotate(0deg) scale(1)', opacity: 1, offset: 0 },
+                    // a beat where the page is visibly cracked but still whole
+                    { transform: 'translate(' + (ax * 14) + 'px,' + (ay * 14) + 'px) rotate(' + (rot * 0.04) + 'deg) scale(1.015)', opacity: 1, offset: 0.07 },
+                    { transform: 'translate(' + (dx * 0.5) + 'px,' + peak + 'px) rotate(' + (rot * 0.45) + 'deg) scale(1.02)', opacity: 1, offset: 0.42 },
+                    { transform: 'translate(' + (dx * 0.82) + 'px,' + (peak + (land - peak) * 0.62) + 'px) rotate(' + (rot * 0.8) + 'deg) scale(0.9)', opacity: 0.85, offset: 0.75 },
+                    { transform: 'translate(' + dx + 'px,' + land + 'px) rotate(' + rot + 'deg) scale(0.78)', opacity: 0, offset: 1 }
+                ], { duration: BLAST, easing: 'cubic-bezier(0.2, 0.6, 0.35, 1)', fill: 'forwards' });
+            });
+        }
+
+        function shockwaves(ox, oy) {
+            var reach = Math.hypot(window.innerWidth, window.innerHeight) * 0.85;
+            [0, 110, 230].forEach(function (delay, i) {
+                var ring = document.createElement('div');
+                ring.className = 'ring';
+                var size = 60;
+                ring.style.cssText =
+                    'left:' + (ox - size / 2) + 'px;top:' + (oy - size / 2) + 'px;' +
+                    'width:' + size + 'px;height:' + size + 'px;' +
+                    (i ? 'border-color:rgba(56,182,255,0.55);border-width:1px;box-shadow:0 0 14px rgba(56,182,255,0.5);' : '');
+                fxEl.appendChild(ring);
+                ring.animate([
+                    { transform: 'scale(0.15)', opacity: 0.95, offset: 0 },
+                    { transform: 'scale(' + (reach / size * 0.55) + ')', opacity: 0.5, offset: 0.45 },
+                    { transform: 'scale(' + (reach / size) + ')', opacity: 0, offset: 1 }
+                ], { duration: 620 + i * 110, delay: delay, easing: 'cubic-bezier(0.12, 0.75, 0.3, 1)', fill: 'forwards' });
+            });
+        }
+
+        function sparks(ox, oy) {
+            var colors = ['#ffffff', '#38b6ff', '#9ad8ff', '#f5a623'];
+            var frag = document.createDocumentFragment();
+            var made = [];
+            for (var i = 0; i < 54; i++) {
+                var sp = document.createElement('div');
+                sp.className = 'spark';
+                var size = rand(2, 6);
+                var color = colors[(Math.random() * colors.length) | 0];
+                sp.style.cssText =
+                    'left:' + ox + 'px;top:' + oy + 'px;' +
+                    'width:' + size + 'px;height:' + size + 'px;' +
+                    'background:' + color + ';box-shadow:0 0 ' + (size * 3) + 'px ' + color + ';';
+                frag.appendChild(sp);
+                made.push(sp);
+            }
+            fxEl.appendChild(frag);
+
+            made.forEach(function (sp) {
+                var angle = rand(0, Math.PI * 2);
+                var reach = rand(120, 760);
+                var dx = Math.cos(angle) * reach;
+                var dy = Math.sin(angle) * reach;
+                sp.animate([
+                    { transform: 'translate(0,0) scale(1)', opacity: 1 },
+                    { transform: 'translate(' + (dx * 0.6) + 'px,' + (dy * 0.6 - 30) + 'px) scale(0.8)', opacity: 1, offset: 0.55 },
+                    { transform: 'translate(' + dx + 'px,' + (dy + rand(120, 300)) + 'px) scale(0)', opacity: 0 }
+                ], { duration: rand(600, 1150), easing: 'cubic-bezier(0.1, 0.6, 0.3, 1)', fill: 'forwards' });
+            });
+        }
+
+        function cameraShake() {
+            var frames = [{ transform: 'translate(0,0) rotate(0deg)' }];
+            for (var i = 0; i < 14; i++) {
+                var decay = 1 - i / 14;
+                frames.push({
+                    transform: 'translate(' + rand(-16, 16) * decay + 'px,' + rand(-16, 16) * decay + 'px) ' +
+                               'rotate(' + rand(-1.1, 1.1) * decay + 'deg)'
+                });
+            }
+            frames.push({ transform: 'translate(0,0) rotate(0deg)' });
+            shakeEl.animate(frames, { duration: 620, easing: 'linear' });
+        }
+
+        function detonate(ox, oy) {
+            // swap the live page for the pre-cut copy, then blow it apart
+            stage.classList.add('gone');
+            shardWrap.classList.add('on');
+            voidEl.classList.add('lit');
+
+            flashEl.style.setProperty('--ox', ox + 'px');
+            flashEl.style.setProperty('--oy', oy + 'px');
+            flashEl.animate([
+                { opacity: 0 }, { opacity: 1, offset: 0.06 }, { opacity: 0 }
+            ], { duration: 520, easing: 'ease-out' });
+
+            launchShards(ox, oy);
+            shockwaves(ox, oy);
+            sparks(ox, oy);
+            cameraShake();
+        }
+
+        function fallback() {
+            voidEl.classList.add('lit');
+            document.documentElement.classList.add('falling');
+            setTimeout(go, reduced ? 320 : 900);
+        }
+
+        function go() { window.location.href = 'ai.html'; }
+
+        function boom(ox, oy) {
+            if (detonated) return;
+            detonated = true;
+
+            if (reduced) { fallback(); return; }
+
+            // shards not built or not painted yet — don't flash a blank screen
+            buildShards();
+            if (!syncShards()) { fallback(); return; }
+
+            // wind-up: a bright core swells at the button before it lets go
+            coreEl.style.left = ox + 'px';
+            coreEl.style.top = oy + 'px';
+            var coreAnim = coreEl.animate([
+                { opacity: 0, transform: 'scale(0.2)' },
+                { opacity: 1, transform: 'scale(1.9)' },
+                { opacity: 0.9, transform: 'scale(1.1)' }
+            ], { duration: CHARGE, easing: 'ease-in', fill: 'forwards' });
+
+            stage.animate([
+                { transform: 'scale(1)' },
+                { transform: 'scale(1.03)' }
+            ], { duration: CHARGE, easing: 'ease-in', fill: 'forwards' });
+
+            setTimeout(function () {
+                coreAnim.cancel(); // fill:forwards would otherwise pin it visible
+                detonate(ox, oy);
+            }, CHARGE);
+
+            // leave once the debris has mostly cleared — no dead time on a black screen
+            setTimeout(go, CHARGE + 820);
+        }
+
+        /* ── Wiring ────────────────────────────────────────────────── */
         // no-ai.html is never modified — we reach in and wire the button from here.
         // Only possible same-origin, so this needs http(s), not file://.
         function wire() {
-            var doc = loadedDoc();
+            var doc = loadedDoc(stage);
             if (!doc) {
                 console.warn('[eedeb] Cannot reach no-ai.html — serve the folder over http, not file://');
                 return;
@@ -112,15 +391,36 @@
             }
 
             target.style.cursor = 'pointer';
-            target.addEventListener('click', drop);
+            target.addEventListener('click', function () {
+                var r = target.getBoundingClientRect();
+                boom(r.left + r.width / 2, r.top + r.height / 2);
+            });
+
+            // build the shards once the browser is idle, so first paint stays fast
+            var idle = window.requestIdleCallback || function (fn) { return setTimeout(fn, 400); };
+            idle(function () { buildShards(); });
         }
 
         stage.addEventListener('load', wire);
-        if (loadedDoc()) wire(); // already there (bfcache, or a fast cached load)
+        if (loadedDoc(stage)) wire(); // already there (bfcache, or a fast cached load)
 
         // Alternate trigger, in case the button ever calls parent.postMessage itself
         window.addEventListener('message', function (e) {
-            if (e.source === stage.contentWindow && e.data === 'eedeb:reveal') drop();
+            if (e.source === stage.contentWindow && e.data === 'eedeb:reveal') {
+                boom(window.innerWidth / 2, window.innerHeight / 2);
+            }
+        });
+
+        // A resize would leave the pre-cut tiles the wrong size — rebuild them.
+        var resizeTimer;
+        window.addEventListener('resize', function () {
+            if (detonated) return;
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(function () {
+                shardWrap.innerHTML = '';
+                shards = [];
+                buildShards();
+            }, 250);
         });
     })();
     </script>
