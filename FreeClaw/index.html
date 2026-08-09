@@ -65,6 +65,9 @@
       --btn-bg: #14181d;
       --btn-fg: #ffffff;
       --btn-bg-h: #2a323c;
+      --sb-track: #f3f1ec;
+      --sb-thumb: rgba(20,24,29,0.22);
+      --sb-thumb-h: rgba(20,24,29,0.38);
     }
 
     :root[data-theme="dark"] {
@@ -90,6 +93,9 @@
       --btn-bg: #e9ecef;
       --btn-fg: #14181d;
       --btn-bg-h: #ffffff;
+      --sb-track: #12151a;
+      --sb-thumb: rgba(233,236,239,0.18);
+      --sb-thumb-h: rgba(233,236,239,0.32);
     }
 
     /* No-JS fallback: honor the system preference when the init script never ran. */
@@ -117,10 +123,61 @@
         --btn-bg: #e9ecef;
         --btn-fg: #14181d;
         --btn-bg-h: #ffffff;
+        --sb-track: #12151a;
+        --sb-thumb: rgba(233,236,239,0.18);
+        --sb-thumb-h: rgba(233,236,239,0.32);
       }
     }
 
     html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+
+    /* ═══ SCROLLBAR ═══
+       Slim, themed, and quiet. Firefox gets the standard properties; Chrome/Safari
+       get the ::-webkit- pseudo-elements. The thumb is inset with a transparent
+       border so it reads as a floating capsule rather than a full-height slab. */
+    html {
+      scrollbar-width: thin;
+      scrollbar-color: var(--sb-thumb) var(--sb-track);
+    }
+    ::-webkit-scrollbar {
+      width: 11px;
+      height: 11px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--sb-track);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--sb-thumb);
+      background-clip: padding-box;
+      border: 3px solid transparent;
+      border-radius: 999px;
+      transition: background-color 0.18s ease;
+    }
+    ::-webkit-scrollbar-thumb:hover { background: var(--sb-thumb-h); background-clip: padding-box; }
+    ::-webkit-scrollbar-thumb:active { background: var(--sb-thumb-h); background-clip: padding-box; }
+    ::-webkit-scrollbar-corner { background: var(--sb-track); }
+
+    /* Copy-me command lines scroll silently — the copy button is the affordance. */
+    .pill code::-webkit-scrollbar,
+    .term-line code::-webkit-scrollbar { width: 0; height: 0; display: none; }
+
+    /* Code cards are dark in both themes, so they keep a dark scrollbar in both. */
+    .codecard pre {
+      scrollbar-width: thin;
+      scrollbar-color: rgba(233,236,239,0.22) transparent;
+    }
+    .codecard pre::-webkit-scrollbar { height: 10px; }
+    .codecard pre::-webkit-scrollbar-track { background: transparent; }
+    .codecard pre::-webkit-scrollbar-thumb {
+      background: rgba(233,236,239,0.22);
+      background-clip: padding-box;
+      border: 3px solid transparent;
+      border-radius: 999px;
+    }
+    .codecard pre::-webkit-scrollbar-thumb:hover {
+      background: rgba(233,236,239,0.36);
+      background-clip: padding-box;
+    }
 
     body {
       background: var(--paper);
