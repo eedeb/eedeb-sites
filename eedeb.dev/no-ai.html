@@ -1,45 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My First Page</title>
+    <title>eedeb.dev</title>
     <style>
         body {
             background: rgb(56, 182, 255);
         }
+
         button {
             background: rgb(245, 166, 35);
             border-radius: 10px;
         }
+
+        .button {
+            display: inline-block;
+            background: rgb(245, 166, 35);
+            border-radius: 10px;
+            margin: 2px;
+            padding: 5px;
+            color: black;
+            text-decoration: none;
+        }
+
+        .button:hover {
+            background: rgb(245, 166, 35, 0.5);
+        }
+
         h1 {
             color: red;
         }
+
         h2 {
             color: green;
         }
+
         h3 {
             color: blue;
         }
+
+        box {
+            background: pink;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px;
+            color: black;
+        }
+
+        .centered-div {
+            background-color: purple;
+            padding: 10px;
+            width: fit-content;
+            margin-left: 48%;
+        }
     </style>
 </head>
+
 <body>
     <h1>Welcome to eedeb.dev</h1>
     <h2>Non-vibecoded resume</h2>
     <p>My name is Elliot DeBruin and I am a self-taught software engineer.</P>
     <p>I like designing AI software and backends, everything from agent structures to my own neural networks.</P>
     <p>I don't like frontend design.</p>
-    <button >I can tell</button>
+    <button>I can tell</button>
     <p>I like designing the base for software systems and utilizing AI tools to build them up.</p>
+
+
+    <hr>
+
+    <h3>Experience</h3>
+    <p>I taught myself to code during the covid lockdown.</p>
+    <p>I started on Scrath making video games, and then I got a Raspberry Pi.</p>
+    <p>I learned the Linux operating system and made my first python script, and I have been coding ever since</p>
+    <box>6 years coding</box>
+    <box>37 Repositories</box>
+    <box>20k+ lines written</box>
 
 
     <hr>
 
     <h3>Projects</h3>
     <p>I have many projects that I genuinely care about and work on,</p>
-    <button src="https://freeclaw.eedeb.dev">FreeClaw</button><button src="https://github.com/eedeb/Classy">Classy</button><button src="chat314.com">Chat314</button>
+    <a class="button" target="_blank" href="https://freeclaw.eedeb.dev">FreeClaw</a><a class="button"
+        target="_blank" href="https://github.com/eedeb/Classy">Classy</a><a class="button" target="_blank" href="chat314.com">Chat314</a>
     <p>as well as many weekend projects that I vibe code just for fun.</p>
-    <button src="https://minecraft.eedeb.dev">Minecraft</button><button src="https://clashroyale.eedeb.dev">Clash Royale</button><button src="https://github.com/eedeb/SAT-study">SAT English</button>
+    <a class="button" target="_blank" href="https://minecraft.eedeb.dev">Minecraft</a><a class="button"
+        target="_blank" href="https://clashroyale.eedeb.dev">Clash Royale</a><a class="button"
+        target="_blank" href="https://github.com/eedeb/SAT-study">SAT English</a>
 
 
     <hr>
@@ -48,7 +97,7 @@
     <p>My language of choice is Python. Most of my projects are in it.</p>
     <p>I know about this much HTML and CSS</p>
     <p>I am very familiar with the OpenAI pip package and PyTorch.</p>
-    <p>I am also very good with the Linux operating system and Bash</p>
+    <p>I am also very good with the Linux operating system and Bash.</p>
 
 
     <hr>
@@ -64,10 +113,17 @@
 
 
     <h3>Contact</h3>
-    <button src="https://github.com/eedeb">Github</button>
-    <button>elliot e debruin - at gmail dot com</button>
-    <button src="https://discord.com/users/mrpi314tech">Discord</button>
+    <a class="button" target="_blank" href="https://github.com/eedeb">Github</a>
+    <a class="button">elliot e debruin - at gmail dot com</a>
+    <a class="button" target="_blank" href="https://discord.com/users/mrpi314tech">Discord</a>
 
+
+    <hr>
+
+    <h3>Can I center a div?</h3>
+
+    <div class="centered-div">No</div>
 
 </body>
+
 </html>
