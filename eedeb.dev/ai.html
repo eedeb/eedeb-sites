@@ -262,9 +262,12 @@
       0%, 100% { transform: translate(0, 0); }
       50% { transform: translate(-30px, 40px); }
     }
-    /* min-width:0 lets this flex item shrink below its longest word,
-       otherwise "tomorrow." pushes the whole block past a phone screen */
-    .hero-content { position: relative; z-index: 1; max-width: 780px; min-width: 0; }
+    /* Wide enough for the headline at its 6.5rem cap — "of tomorrow." measures
+       1019px there, so a 780px column forced it to wrap into stacked lines.
+       Body copy is kept narrow separately via .hero-desc.
+       min-width:0 lets this flex item shrink below its longest word,
+       otherwise "tomorrow." pushes the whole block past a phone screen. */
+    .hero-content { position: relative; z-index: 1; max-width: 1060px; min-width: 0; }
 
     .hero-tag {
       display: inline-flex;
