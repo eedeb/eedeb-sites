@@ -262,7 +262,9 @@
       0%, 100% { transform: translate(0, 0); }
       50% { transform: translate(-30px, 40px); }
     }
-    .hero-content { position: relative; z-index: 1; max-width: 820px; }
+    /* min-width:0 lets this flex item shrink below its longest word,
+       otherwise "tomorrow." pushes the whole block past a phone screen */
+    .hero-content { position: relative; z-index: 1; max-width: 780px; min-width: 0; }
 
     .hero-tag {
       display: inline-flex;
@@ -293,12 +295,13 @@
     }
 
     h1 {
-      font-size: clamp(2.7rem, 7.5vw, 6rem);
+      /* floor keeps the intended 3 lines intact: "of tomorrow." is the widest
+         line and needs <=32px to fit a 375px screen */
+      font-size: clamp(2rem, 8vw, 6.5rem);
       font-weight: 800;
-      line-height: 0.98;
+      line-height: 0.95;
       letter-spacing: -0.03em;
       margin-bottom: 1.5rem;
-      text-wrap: balance;
       animation: fadeUp 0.6s 0.1s ease both;
     }
     h1 em {
@@ -310,9 +313,9 @@
     .hero-desc {
       font-size: 1.08rem;
       color: var(--muted);
-      max-width: 560px;
+      max-width: 540px;
       line-height: 1.75;
-      margin-bottom: 1.5rem;
+      margin-bottom: 2.5rem;
       animation: fadeUp 0.6s 0.2s ease both;
     }
     .hero-desc strong { color: var(--text); font-weight: 700; }
@@ -689,7 +692,7 @@
       <div class="hero-tag">Available for freelance work</div>
       <h1>
         Building the 
-        <em>web &amp AI</em>
+        <em>web &amp; AI</em>
         of tomorrow.
       </h1>
       <p class="hero-desc">
