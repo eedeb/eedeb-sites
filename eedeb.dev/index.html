@@ -332,7 +332,12 @@
             setTimeout(go, reduced ? 320 : 900);
         }
 
-        function go() { window.location.href = 'ai.html'; }
+        function go() {
+            // one-shot flag so ai.html knows to ask the question — it clears the
+            // flag on read, so a refresh or a direct visit won't show the popup
+            try { sessionStorage.setItem('eedeb:boom', '1'); } catch (err) {}
+            window.location.href = 'ai.html';
+        }
 
         function boom(ox, oy) {
             if (detonated) return;
