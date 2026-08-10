@@ -142,8 +142,8 @@
         var fxEl    = document.getElementById('fx');
         var voidEl  = document.getElementById('void');
 
-        var CHARGE = 220;       // wind-up before the bang
-        var BLAST  = 1050;      // debris flight time
+        var CHARGE = 380;       // wind-up before the bang
+        var BLAST  = 2000;      // debris flight time
         var shards = [];
         var detonated = false;
         var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -237,9 +237,9 @@
                 s.el.animate([
                     { transform: 'translate(0,0) rotate(0deg) scale(1)', opacity: 1, offset: 0 },
                     // a beat where the page is visibly cracked but still whole
-                    { transform: 'translate(' + (ax * 14) + 'px,' + (ay * 14) + 'px) rotate(' + (rot * 0.04) + 'deg) scale(1.015)', opacity: 1, offset: 0.07 },
-                    { transform: 'translate(' + (dx * 0.5) + 'px,' + peak + 'px) rotate(' + (rot * 0.45) + 'deg) scale(1.02)', opacity: 1, offset: 0.42 },
-                    { transform: 'translate(' + (dx * 0.82) + 'px,' + (peak + (land - peak) * 0.62) + 'px) rotate(' + (rot * 0.8) + 'deg) scale(0.9)', opacity: 0.85, offset: 0.75 },
+                    { transform: 'translate(' + (ax * 14) + 'px,' + (ay * 14) + 'px) rotate(' + (rot * 0.04) + 'deg) scale(1.015)', opacity: 1, offset: 0.05 },
+                    { transform: 'translate(' + (dx * 0.5) + 'px,' + peak + 'px) rotate(' + (rot * 0.45) + 'deg) scale(1.02)', opacity: 1, offset: 0.31 },
+                    { transform: 'translate(' + (dx * 0.82) + 'px,' + (peak + (land - peak) * 0.62) + 'px) rotate(' + (rot * 0.8) + 'deg) scale(0.9)', opacity: 0.9, offset: 0.66 },
                     { transform: 'translate(' + dx + 'px,' + land + 'px) rotate(' + rot + 'deg) scale(0.78)', opacity: 0, offset: 1 }
                 ], { duration: BLAST, easing: 'cubic-bezier(0.2, 0.6, 0.35, 1)', fill: 'forwards' });
             });
@@ -247,7 +247,7 @@
 
         function shockwaves(ox, oy) {
             var reach = Math.hypot(window.innerWidth, window.innerHeight) * 0.85;
-            [0, 110, 230].forEach(function (delay, i) {
+            [0, 190, 400].forEach(function (delay, i) {
                 var ring = document.createElement('div');
                 ring.className = 'ring';
                 var size = 60;
@@ -260,7 +260,7 @@
                     { transform: 'scale(0.15)', opacity: 0.95, offset: 0 },
                     { transform: 'scale(' + (reach / size * 0.55) + ')', opacity: 0.5, offset: 0.45 },
                     { transform: 'scale(' + (reach / size) + ')', opacity: 0, offset: 1 }
-                ], { duration: 620 + i * 110, delay: delay, easing: 'cubic-bezier(0.12, 0.75, 0.3, 1)', fill: 'forwards' });
+                ], { duration: 1080 + i * 190, delay: delay, easing: 'cubic-bezier(0.12, 0.75, 0.3, 1)', fill: 'forwards' });
             });
         }
 
@@ -291,21 +291,21 @@
                     { transform: 'translate(0,0) scale(1)', opacity: 1 },
                     { transform: 'translate(' + (dx * 0.6) + 'px,' + (dy * 0.6 - 30) + 'px) scale(0.8)', opacity: 1, offset: 0.55 },
                     { transform: 'translate(' + dx + 'px,' + (dy + rand(120, 300)) + 'px) scale(0)', opacity: 0 }
-                ], { duration: rand(600, 1150), easing: 'cubic-bezier(0.1, 0.6, 0.3, 1)', fill: 'forwards' });
+                ], { duration: rand(1100, 1950), easing: 'cubic-bezier(0.1, 0.6, 0.3, 1)', fill: 'forwards' });
             });
         }
 
         function cameraShake() {
             var frames = [{ transform: 'translate(0,0) rotate(0deg)' }];
-            for (var i = 0; i < 14; i++) {
-                var decay = 1 - i / 14;
+            for (var i = 0; i < 20; i++) {
+                var decay = 1 - i / 20;
                 frames.push({
                     transform: 'translate(' + rand(-16, 16) * decay + 'px,' + rand(-16, 16) * decay + 'px) ' +
                                'rotate(' + rand(-1.1, 1.1) * decay + 'deg)'
                 });
             }
             frames.push({ transform: 'translate(0,0) rotate(0deg)' });
-            shakeEl.animate(frames, { duration: 620, easing: 'linear' });
+            shakeEl.animate(frames, { duration: 900, easing: 'linear' });
         }
 
         function detonate(ox, oy) {
@@ -317,8 +317,8 @@
             flashEl.style.setProperty('--ox', ox + 'px');
             flashEl.style.setProperty('--oy', oy + 'px');
             flashEl.animate([
-                { opacity: 0 }, { opacity: 1, offset: 0.06 }, { opacity: 0 }
-            ], { duration: 520, easing: 'ease-out' });
+                { opacity: 0 }, { opacity: 1, offset: 0.05 }, { opacity: 0 }
+            ], { duration: 780, easing: 'ease-out' });
 
             launchShards(ox, oy);
             shockwaves(ox, oy);
@@ -364,7 +364,7 @@
             }, CHARGE);
 
             // leave once the debris has mostly cleared — no dead time on a black screen
-            setTimeout(go, CHARGE + 820);
+            setTimeout(go, CHARGE + 1600);
         }
 
         /* ── Wiring ────────────────────────────────────────────────── */
