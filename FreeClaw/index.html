@@ -4,10 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FreeClaw — The AI agent that doesn't burn your money</title>
-  <meta name="description" content="FreeClaw is a self-hosted, open-source AI agent engineered for near-zero cost. Web UI, terminal CLI, approval-gated shell access, MCP servers, prompt caching, and exact token accounting. One-line install on Linux and macOS.">
+  <meta name="description" content="FreeClaw is a self-hosted, open-source AI agent engineered for near-zero cost. Web UI, terminal CLI, approval-gated shell access, MCP servers, prompt caching, and exact token accounting. One-line install on Linux and macOS, native installer on Windows.">
   <meta name="theme-color" content="#faf9f6">
   <meta property="og:title" content="FreeClaw — The AI agent that doesn't burn your money">
-  <meta property="og:description" content="A self-hosted, open-source AI agent engineered for near-zero cost. One-line install on Linux and macOS.">
+  <meta property="og:description" content="A self-hosted, open-source AI agent engineered for near-zero cost. One-line install on Linux and macOS, native installer on Windows.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://freeclaw.eedeb.dev/">
   <meta property="og:image" content="https://freeclaw.eedeb.dev/eagle.png">
@@ -505,6 +505,49 @@
     }
     .pill-os button.active { background: rgba(255,255,255,0.14); color: #fff; }
     .pill-os button:hover { background: rgba(255,255,255,0.10); color: #fff; }
+
+    /* Windows: a download, not a command. The pill and the terminal below keep
+       their chrome and swap their contents - `.is-download` is set by
+       selectOS(). The rows live in the markup rather than being assembled in
+       JS, so the .exe is a real <a href>: crawlers see it, and right-click →
+       copy link works. It is still display:none until selectOS() runs, same as
+       the platform switch has always been. */
+    .dl-row { display: none; align-items: center; gap: 10px; width: 100%; }
+    .is-download .dl-row { display: flex; }
+    .is-download > code,
+    .is-download .term-line > code,
+    .is-download .copy-btn { display: none; }
+
+    .dl-file {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: #d7dde2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .dl-file .dim { color: #5d6771; }
+    .dl-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      margin-left: auto;
+      font-family: var(--sans);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--dark);
+      background: #fff;
+      border: none;
+      border-radius: 6px;
+      padding: 7px 14px;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background 0.15s;
+    }
+    .dl-btn:hover { background: #e9ecef; }
+    .dl-btn svg { flex-shrink: 0; }
+    .term-body .dl-file { font-size: 13.5px; }
+    .term-body .dl-btn { padding: 8px 16px; }
 
     .hero-note {
       font-size: 12.5px;
@@ -1499,7 +1542,7 @@
 <!-- HERO -->
 <section id="hero">
   <div class="wrap">
-    <div class="hero-badge hi hi-1"><span class="pulse"></span> Open source &nbsp;·&nbsp; Self-hosted<span class="badge-os"> &nbsp;·&nbsp; <b>Linux · macOS · Windows (WSL)</b></span></div>
+    <div class="hero-badge hi hi-1"><span class="pulse"></span> Open source &nbsp;·&nbsp; Self-hosted<span class="badge-os"> &nbsp;·&nbsp; <b>Linux · macOS · Windows</b></span></div>
     <h1 class="hero-h hi hi-2">The AI agent that <em>doesn't burn your&nbsp;money.</em></h1>
     <p class="hero-lede hi hi-3">
       FreeClaw runs on your own hardware and treats every token as money — because it is.
@@ -1516,12 +1559,19 @@
     <div class="hi hi-5">
       <div class="pill">
         <code id="heroCmd"><span class="p">$</span>curl -fsSL https://freeclaw.eedeb.dev/install.sh | bash</code>
+        <div class="dl-row">
+          <span class="dl-file">FreeClaw-Setup<span class="dim">.exe</span></span>
+          <a class="dl-btn" href="https://freeclaw.eedeb.dev/FreeClaw-Setup.exe" download>
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 1a1 1 0 0 1 1 1v6.6l2.3-2.3a1 1 0 1 1 1.4 1.4l-4 4a1 1 0 0 1-1.4 0l-4-4a1 1 0 0 1 1.4-1.4L7 8.6V2a1 1 0 0 1 1-1ZM2 12a1 1 0 0 1 1 1v1h10v-1a1 1 0 1 1 2 0v1.5a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 1 14.5V13a1 1 0 0 1 1-1Z"/></svg>
+            Download
+          </a>
+        </div>
         <div class="pill-os">
           <button data-os="linux" onclick="selectOS('linux')">Linux</button>
           <button data-os="mac" onclick="selectOS('mac')">macOS</button>
           <button data-os="win" onclick="selectOS('win')">Windows</button>
         </div>
-        <button onclick="copyCmd(this)">Copy</button>
+        <button class="copy-btn" onclick="copyCmd(this)">Copy</button>
       </div>
       <div class="hero-note" id="heroNote">Runs natively under systemd · needs git, python3, sudo</div>
     </div>
@@ -1900,14 +1950,14 @@ client.chat.completions.<span class="f">create</span>(
     <div class="sect-head center rv">
       <div class="eyebrow center">Installation</div>
       <h2 class="display">One command.<br><em>You're done.</em></h2>
-      <p class="lede">The installer handles everything. On Linux it runs natively under systemd; on macOS it runs in Docker; on Windows it runs inside <a href="https://learn.microsoft.com/windows/wsl/install" target="_blank" rel="noopener">WSL</a> using the Linux installer.</p>
+      <p class="lede">The installer handles everything. On Linux it runs natively under systemd; on macOS it runs in Docker; on Windows it's a normal <code>.exe</code> that runs natively — no WSL, no Docker, and no administrator rights.</p>
     </div>
 
     <div class="inst-shell">
       <div class="term rv">
         <div class="term-bar">
           <span class="d r"></span><span class="d y"></span><span class="d g"></span>
-          <span class="t">terminal</span>
+          <span class="t" id="termTitle">terminal</span>
           <div class="term-tabs">
             <button data-os="linux" onclick="selectOS('linux')">Linux</button>
             <button data-os="mac" onclick="selectOS('mac')">macOS</button>
@@ -1917,7 +1967,14 @@ client.chat.completions.<span class="f">create</span>(
         <div class="term-body">
           <div class="term-line">
             <code id="instCmd"><span class="p">$</span>curl -fsSL https://freeclaw.eedeb.dev/install.sh | bash</code>
-            <button class="term-copy" onclick="copyCmd(this)">Copy</button>
+            <div class="dl-row">
+              <span class="dl-file">FreeClaw-Setup<span class="dim">.exe</span></span>
+              <a class="dl-btn" href="https://freeclaw.eedeb.dev/FreeClaw-Setup.exe" download>
+                <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 1a1 1 0 0 1 1 1v6.6l2.3-2.3a1 1 0 1 1 1.4 1.4l-4 4a1 1 0 0 1-1.4 0l-4-4a1 1 0 0 1 1.4-1.4L7 8.6V2a1 1 0 0 1 1-1ZM2 12a1 1 0 0 1 1 1v1h10v-1a1 1 0 1 1 2 0v1.5a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 1 14.5V13a1 1 0 0 1 1-1Z"/></svg>
+                Download
+              </a>
+            </div>
+            <button class="term-copy copy-btn" onclick="copyCmd(this)">Copy</button>
           </div>
           <div class="term-meta" id="instNote">runs natively under systemd · requires git, python3, sudo</div>
         </div>
@@ -1926,8 +1983,8 @@ client.chat.completions.<span class="f">create</span>(
       <div class="inst-steps rv-group">
         <div class="inst-step">
           <div>
-            <h3>Clone &amp; set up the environment</h3>
-            <p>The script clones the repo and installs every dependency — PyTorch (CPU), Flask, the OpenAI SDK, and the Classy classifier. Linux gets a Python virtual environment; macOS gets a Docker image. Either way, only your platform's files are checked out.</p>
+            <h3>Set up the environment</h3>
+            <p>The script clones the repo and installs every dependency — PyTorch (CPU), Flask, the OpenAI SDK, and the Classy classifier. Linux gets a Python virtual environment; macOS gets a Docker image. Either way, only your platform's files are checked out. The Windows installer skips all of it: the <code>.exe</code> already carries its own Python and every dependency, so nothing has to be on the machine first.</p>
           </div>
         </div>
         <div class="inst-step">
@@ -1939,7 +1996,7 @@ client.chat.completions.<span class="f">create</span>(
         <div class="inst-step">
           <div>
             <h3>FreeClaw starts automatically</h3>
-            <p>Linux registers a systemd service that starts on boot; macOS runs the container with a restart policy. Both install the <code>freeclaw</code> terminal client and print your local URL — <code>http://localhost:6767</code> on macOS, something like <code>http://192.168.x.x:6767</code> on Linux.</p>
+            <p>Linux registers a systemd service that starts on boot; macOS runs the container with a restart policy; Windows puts an icon in the notification area that supervises the server and can start when you sign in. All three install the <code>freeclaw</code> terminal client and give you your local URL — <code>http://localhost:6767</code> on macOS and Windows, something like <code>http://192.168.x.x:6767</code> on Linux.</p>
           </div>
         </div>
         <div class="inst-step">
@@ -1951,7 +2008,7 @@ client.chat.completions.<span class="f">create</span>(
         <div class="inst-step">
           <div>
             <h3>Start chatting</h3>
-            <p>Chat from any browser on your network, or run <code>freeclaw</code> in your terminal. Later, <code>./update.sh</code> (or <code>./update-mac.sh</code>) pulls the latest changes and restarts FreeClaw, leaving your data alone.</p>
+            <p>Chat from any browser on your network, or run <code>freeclaw</code> in your terminal. Later, <code>./update.sh</code> (or <code>./update-mac.sh</code>) pulls the latest changes and restarts FreeClaw; on Windows you run the newest installer straight over the top. Every route leaves your chats, files and settings alone.</p>
           </div>
         </div>
       </div>
@@ -2037,8 +2094,11 @@ client.chat.completions.<span class="f">create</span>(
       note: 'Runs in Docker · needs git and Docker Desktop (running)'
     },
     win: {
-      cmd: 'curl -fsSL https://freeclaw.eedeb.dev/install.sh | bash',
-      note: 'Runs via WSL · in PowerShell: wsl --install, reboot, then paste this in your WSL terminal'
+      // No cmd: Windows is a download, not something to paste. selectOS()
+      // keys off the absence of `cmd` to swap the pill and terminal over to
+      // their .dl-row, and copyCmd() refuses rather than copying undefined.
+      download: 'https://freeclaw.eedeb.dev/FreeClaw-Setup.exe',
+      note: 'Native installer · no WSL, no Docker · brings its own Python'
     }
   };
   var currentOS = 'linux';
@@ -2048,10 +2108,18 @@ client.chat.completions.<span class="f">create</span>(
     document.querySelectorAll('[data-os]').forEach(function (b) {
       b.classList.toggle('active', b.dataset.os === os);
     });
-    ['heroCmd', 'instCmd'].forEach(function (id) {
-      var el = document.getElementById(id);
-      if (el) el.innerHTML = '<span class="p">$</span>' + CMDS[os].cmd;
+    var isDownload = !CMDS[os].cmd;
+    document.querySelectorAll('.pill, .term').forEach(function (el) {
+      el.classList.toggle('is-download', isDownload);
     });
+    var title = document.getElementById('termTitle');
+    if (title) title.textContent = isDownload ? 'installer' : 'terminal';
+    if (!isDownload) {
+      ['heroCmd', 'instCmd'].forEach(function (id) {
+        var el = document.getElementById(id);
+        if (el) el.innerHTML = '<span class="p">$</span>' + CMDS[os].cmd;
+      });
+    }
     ['heroNote', 'instNote'].forEach(function (id) {
       var el = document.getElementById(id);
       if (el) el.textContent = CMDS[os].note;
@@ -2087,6 +2155,9 @@ client.chat.completions.<span class="f">create</span>(
   window.toggleTheme = toggleTheme;
 
   function copyCmd(btn) {
+    // Windows has no command to copy; its button is hidden, but a stray call
+    // (keyboard, an old cached page) must not put "undefined" on the clipboard.
+    if (!CMDS[currentOS].cmd) return;
     if (navigator.clipboard) navigator.clipboard.writeText(CMDS[currentOS].cmd);
     var prev = btn.textContent;
     btn.textContent = 'Copied!';
