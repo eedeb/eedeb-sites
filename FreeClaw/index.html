@@ -1900,7 +1900,7 @@ client.chat.completions.<span class="f">create</span>(
     <div class="sect-head center rv">
       <div class="eyebrow center">Installation</div>
       <h2 class="display">One command.<br><em>You're done.</em></h2>
-      <p class="lede">One command, on every platform. On Linux it runs natively under systemd; on macOS it runs in Docker; on Windows it runs natively — no WSL, no Docker, and no administrator rights.</p>
+      <p class="lede">One command, on every platform, and all three run natively: Linux under systemd, macOS in the menu bar, Windows in the notification area. No Docker, no WSL, and no administrator rights on either desktop.</p>
     </div>
 
     <div class="inst-shell">
@@ -1927,7 +1927,7 @@ client.chat.completions.<span class="f">create</span>(
         <div class="inst-step">
           <div>
             <h3>Set up the environment</h3>
-            <p>The script clones the repo and installs every dependency — PyTorch (CPU), Flask, the OpenAI SDK, and the Classy classifier. Linux gets a Python virtual environment; macOS gets a Docker image. Either way, only your platform's files are checked out. The Windows installer skips all of it: the package already carries its own Python and every dependency, so nothing has to be on the machine first.</p>
+            <p>The script clones the repo and installs every dependency — Flask, the OpenAI SDK, and the Classy classifier. Linux builds a Python virtual environment; macOS and Windows each download a private Python of their own, so an install can't be broken by the one you already have — or by not having one. Either way, only your platform's files are checked out.</p>
           </div>
         </div>
         <div class="inst-step">
@@ -1939,7 +1939,7 @@ client.chat.completions.<span class="f">create</span>(
         <div class="inst-step">
           <div>
             <h3>FreeClaw starts automatically</h3>
-            <p>Linux registers a systemd service that starts on boot; macOS runs the container with a restart policy; Windows puts an icon in the notification area that supervises the server and can start when you sign in. All three install the <code>freeclaw</code> terminal client and give you your local URL — <code>http://localhost:6767</code> on macOS and Windows, something like <code>http://192.168.x.x:6767</code> on Linux.</p>
+            <p>Linux registers a systemd service that starts on boot. macOS and Windows install a small app instead — in the menu bar and the notification area — that supervises the server, restarts it on demand, and can start when you log in. All three install the <code>freeclaw</code> terminal client and give you your local URL — <code>http://127.0.0.1:6767</code> on macOS and Windows, something like <code>http://192.168.x.x:6767</code> on Linux.</p>
           </div>
         </div>
         <div class="inst-step">
@@ -1951,7 +1951,7 @@ client.chat.completions.<span class="f">create</span>(
         <div class="inst-step">
           <div>
             <h3>Start chatting</h3>
-            <p>Chat from any browser on your network, or run <code>freeclaw</code> in your terminal. Later, <code>./update.sh</code> (or <code>./update-mac.sh</code>) pulls the latest changes and restarts FreeClaw; on Windows you re-run the same one-line install. Every route leaves your chats, files and settings alone.</p>
+            <p>Chat from any browser on your network, or run <code>freeclaw</code> in your terminal. Later, <b>Settings → Update FreeClaw</b> does it from the browser — or run <code>./update.sh</code> on Linux, <code>~/.freeclaw/update-mac.sh</code> on macOS, or re-run the one-line install on Windows. Every route leaves your chats, files and settings alone.</p>
           </div>
         </div>
       </div>
@@ -2034,7 +2034,7 @@ client.chat.completions.<span class="f">create</span>(
     },
     mac: {
       cmd: 'curl -fsSL https://freeclaw.eedeb.dev/install-mac.sh | bash',
-      note: 'Runs in Docker · needs git and Docker Desktop (running)'
+      note: 'Runs natively in the menu bar · no Docker · brings its own Python'
     },
     win: {
       // PowerShell, so not a $ prompt - the line is pasted into a window whose
