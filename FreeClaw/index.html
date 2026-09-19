@@ -504,6 +504,11 @@
       font-size: 11.5px;
     }
     .pill-os button.active { background: rgba(255,255,255,0.14); color: #fff; }
+
+    /* The hosted tab shows an address instead of a command. Underlined, so it
+       reads as a link and not as something you are meant to paste. */
+    .term-link { color: inherit; text-decoration: underline; text-underline-offset: 3px; }
+    .term-link:hover { color: #fff; }
     .pill-os button:hover { background: rgba(255,255,255,0.10); color: #fff; }
 
     .hero-note {
@@ -1520,6 +1525,7 @@
           <button data-os="linux" onclick="selectOS('linux')">Linux</button>
           <button data-os="mac" onclick="selectOS('mac')">macOS</button>
           <button data-os="win" onclick="selectOS('win')">Windows</button>
+          <button data-os="host" onclick="selectOS('host')">One-click</button>
         </div>
         <button onclick="copyCmd(this)">Copy</button>
       </div>
@@ -1901,6 +1907,7 @@ client.chat.completions.<span class="f">create</span>(
       <div class="eyebrow center">Installation</div>
       <h2 class="display">One command.<br><em>You're done.</em></h2>
       <p class="lede">One command, on every platform, and all three run natively: Linux under systemd, macOS in the menu bar, Windows in the notification area. No Docker, no WSL, and no administrator rights on either desktop.</p>
+      <p class="lede" style="font-size:15px;opacity:0.78">No machine to put it on? <a href="/host">We'll host it</a> — the same FreeClaw, running on our server instead of yours.</p>
     </div>
 
     <div class="inst-shell">
@@ -1912,6 +1919,7 @@ client.chat.completions.<span class="f">create</span>(
             <button data-os="linux" onclick="selectOS('linux')">Linux</button>
             <button data-os="mac" onclick="selectOS('mac')">macOS</button>
             <button data-os="win" onclick="selectOS('win')">Windows</button>
+            <button data-os="host" onclick="selectOS('host')">One-click</button>
           </div>
         </div>
         <div class="term-body">
@@ -1969,6 +1977,9 @@ client.chat.completions.<span class="f">create</span>(
         <a href="#install" class="btn btn-primary">Install FreeClaw</a>
         <a href="https://github.com/eedeb/FreeClaw" target="_blank" rel="noopener" class="btn btn-outline">View on GitHub</a>
       </div>
+      <p style="margin-top:16px;font-size:14px;opacity:0.72">
+        Or skip the server: <a href="/host" style="color:inherit;text-decoration:underline;text-underline-offset:3px">we'll run it for you</a>.
+      </p>
       <a href="https://discord.gg/2PbjzKYgKh" target="_blank" rel="noopener" class="cta-discord">
         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.27 5.33A16.5 16.5 0 0 0 15.2 4.1a.06.06 0 0 0-.07.03c-.18.32-.37.73-.51 1.06a15.4 15.4 0 0 0-4.62 0c-.14-.34-.34-.74-.52-1.06a.06.06 0 0 0-.07-.03c-1.4.24-2.75.66-4.06 1.23a.06.06 0 0 0-.03.02C2.66 9.19 1.96 12.94 2.3 16.65a.07.07 0 0 0 .03.05 16.6 16.6 0 0 0 4.99 2.51.06.06 0 0 0 .07-.02c.39-.53.73-1.08 1.02-1.67a.06.06 0 0 0-.03-.09c-.54-.2-1.06-.45-1.56-.74a.06.06 0 0 1 0-.11l.31-.24a.06.06 0 0 1 .06 0c3.27 1.5 6.81 1.5 10.04 0a.06.06 0 0 1 .07 0l.31.24a.06.06 0 0 1 0 .11c-.5.29-1.02.54-1.56.74a.06.06 0 0 0-.04.09c.3.59.64 1.14 1.02 1.67a.06.06 0 0 0 .07.02 16.5 16.5 0 0 0 5-2.51.06.06 0 0 0 .03-.05c.4-4.29-.69-8.01-2.92-11.3a.05.05 0 0 0-.03-.02ZM8.85 14.39c-.98 0-1.79-.9-1.79-2.01 0-1.11.79-2.01 1.79-2.01 1.01 0 1.81.91 1.8 2.01 0 1.11-.8 2.01-1.8 2.01Zm6.31 0c-.98 0-1.79-.9-1.79-2.01 0-1.11.79-2.01 1.79-2.01 1.01 0 1.81.91 1.8 2.01 0 1.11-.79 2.01-1.8 2.01Z"/></svg>
         Questions? Join the Discord
@@ -2042,6 +2053,15 @@ client.chat.completions.<span class="f">create</span>(
       prompt: 'PS&gt;',
       cmd: 'irm https://freeclaw.eedeb.dev/install.ps1 | iex',
       note: 'Runs natively · no WSL, no Docker · brings its own Python'
+    },
+    host: {
+      // Not a command, because there isn't one - that is the whole point of
+      // this tab. The line is the address you open, so `copy` is the plain
+      // text the Copy button hands over while `cmd` carries the link.
+      prompt: '&rarr;',
+      cmd: '<a class="term-link" href="/host">freeclaw.eedeb.dev/host</a>',
+      copy: 'https://freeclaw.eedeb.dev/host',
+      note: 'We run it · $6.99/month · nothing to install, cancel any time'
     }
   };
   var currentOS = 'linux';
@@ -2060,13 +2080,18 @@ client.chat.completions.<span class="f">create</span>(
       var el = document.getElementById(id);
       if (el) el.textContent = CMDS[os].note;
     });
-    try { localStorage.setItem('freeclaw-os', os); } catch (e) {}
+    // Only a real platform is remembered. Someone who looks at the hosted
+    // tab once should still land on their own OS next visit — the terminal is
+    // the first thing on the page, and it is not the place to keep selling.
+    if (os !== 'host') { try { localStorage.setItem('freeclaw-os', os); } catch (e) {} }
   }
   window.selectOS = selectOS;
 
   (function initOS() {
     var os = null;
     try { os = localStorage.getItem('freeclaw-os'); } catch (e) {}
+    // 'host' is deliberately absent: detection picks a platform, never the
+    // paid option.
     if (os !== 'linux' && os !== 'mac' && os !== 'win') {
       var p = navigator.platform || navigator.userAgent || '';
       if (/Mac|iPhone|iPad|iPod/i.test(p)) os = 'mac';
@@ -2091,7 +2116,9 @@ client.chat.completions.<span class="f">create</span>(
   window.toggleTheme = toggleTheme;
 
   function copyCmd(btn) {
-    if (navigator.clipboard) navigator.clipboard.writeText(CMDS[currentOS].cmd);
+    // `copy` when the displayed line is a link rather than a command.
+    var text = CMDS[currentOS].copy || CMDS[currentOS].cmd;
+    if (navigator.clipboard) navigator.clipboard.writeText(text);
     var prev = btn.textContent;
     btn.textContent = 'Copied!';
     setTimeout(function () { btn.textContent = prev; }, 1800);
